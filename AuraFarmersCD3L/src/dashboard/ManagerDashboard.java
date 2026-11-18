@@ -27,6 +27,8 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import app.AgriSystem;
 
@@ -358,13 +360,33 @@ public class ManagerDashboard extends Dashboard {
                 cell.getValue().getPerformedBy()
             )
         );
+        
+        TableColumn<StockMovement, String> reasonColumn = new TableColumn<>("Reason");
+        reasonColumn.setCellValueFactory(cell -> 
+        	new SimpleStringProperty(
+        			cell.getValue().getReason()
+        	)
+        );
+        
+        TableColumn<StockMovement, String> timestampColumn = new TableColumn<>("Timestamp");
+        timestampColumn.setCellValueFactory(cell -> 
+        	new SimpleStringProperty(
+        			cell.getValue().getTimestampText()
+        	)
+        );
 
         table.getColumns().addAll(
-            productIdColumn,
-            quantityColumn,
-            stockColumn,
-            clerkColumn
+    		productIdColumn, 
+    		quantityColumn, 
+    		stockColumn, 
+    		clerkColumn, 
+    		reasonColumn, 
+    		timestampColumn
         );
+        
+        List<StockMovement> newestFirst = new ArrayList<>(inventoryService.getMovements());
+        Collections.reverse(newestFirst);
+        table.setItems(FXCollections.observableArrayList(newestFirst));
 
         // Uses the stock movement records from InventoryService
         table.setItems(

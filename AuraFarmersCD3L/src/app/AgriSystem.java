@@ -32,9 +32,7 @@ public class AgriSystem {
     private User currentUser;
 
     // METHODS
-    
-    // methods to add: sign up (creates account)
-    
+        
     /*
      * AgriSystem()
      * 	- constructor method

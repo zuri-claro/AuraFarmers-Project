@@ -142,7 +142,14 @@ public class InventoryFileManager {
         	
         	PrintWriter writer = new PrintWriter(new FileWriter(movementsFile));
             for (StockMovement m : movements) {
-                writer.println(m.getProductId() + SEPARATOR + m.getQuantity() + SEPARATOR + m.getStockAfter() + SEPARATOR + clean(m.getPerformedBy()) + SEPARATOR + clean(m.getReason()) + SEPARATOR);
+            	writer.println(
+            			m.getProductId() + SEPARATOR 
+            			+ m.getQuantity() + SEPARATOR 
+            			+ m.getStockAfter() + SEPARATOR 
+            			+ clean(m.getPerformedBy()) + SEPARATOR 
+            			+ clean(m.getReason()) + SEPARATOR 
+            			+ (m.getTimestamp() == null ? "" : m.getTimestamp().toString())
+            		);
             } // end of for loop
         	writer.close();
         	
@@ -184,8 +191,10 @@ public class InventoryFileManager {
                     int stockAfter = Integer.parseInt(parts[2]);
                     String performedBy = parts[3];
                     String reason = parts[4];
+                    
+                    LocalDateTime timestamp = parts[5].trim().isEmpty() ? null : LocalDateTime.parse(parts[5].trim());
 
-                    movements.add(new StockMovement(productId, quantity, stockAfter, performedBy, reason));
+                    movements.add(new StockMovement(productId, quantity, stockAfter, performedBy, reason, timestamp));
                 } catch (RuntimeException e) {
                     System.out.println("Skipped a bad line in movements file: " + line);
                 } // end of try catch
