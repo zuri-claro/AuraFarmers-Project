@@ -78,11 +78,11 @@ public class InventoryService {
     } // end of restock
 	
 	/*
-	 * adjust(User, int, int)
+	 * adjust(User, int, int, String)
 	 * 	- allows manager to override (completely change, not just add) stock of product in inventory
 	 * 	- possible errors: null user, user is not manager, quantity is invalid, item not in inventory
 	 */
-    public String adjust(User user, int productId, int newQuantity, String reason) {
+	public String adjust(User user, int productId, int newQuantity, String reason) {
     	
 		// --- to change to error exception instead of js return string ---
 		// error: if user is null or is a clerk (can't modify inventory)
