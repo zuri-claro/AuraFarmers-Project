@@ -42,26 +42,26 @@ public class AgriSystem {
      */
     private AgriSystem() {
     	
-        InventoryFileManager fileManager = new InventoryFileManager("data");
+        InventoryFileManager inventoryFileManager = new InventoryFileManager("data");
+        TransactionFileManager transactionFileManager = new TransactionFileManager("data");
         Inventory inventory = new Inventory();
         
         // check if file is empty
-        if (fileManager.hasSavedItems()) { // if the file isnt empty, load what was saved before
-            for (InventoryItem item : fileManager.loadItems()) {
+        if (inventoryFileManager.hasSavedItems()) { // if the file isnt empty, load what was saved before
+            for (InventoryItem item : inventoryFileManager.loadItems()) {
                 inventory.addItem(item);
             } // end of for loop
             
         } else { // if empty, just add products
         	this.addProducts(inventory);
-            fileManager.saveItems(inventory.getItems());
+            inventoryFileManager.saveItems(inventory.getItems());
             
         } // end of if statement
 
-        inventoryService = new InventoryService(inventory, fileManager);
+        inventoryService = new InventoryService(inventory, inventoryFileManager);
         productService = new ProductService(inventoryService);
-        transactionService = new TransactionService(inventoryService, new TransactionFileManager("data"));
+        transactionService = new TransactionService(inventoryService, transactionFileManager);
         
-        // TEMPORARY FOR TESTINGGG - add users
         User manager = new Manager("manager","manager123","m");
         User clerk = new Clerk("clerk","clerk123","c");
         users.add(manager);
