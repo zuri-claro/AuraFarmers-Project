@@ -24,5 +24,12 @@ public final class Manager extends User{
 	 */
     @Override
     public boolean canModifyInventory() {return true;}
+    
+	/*
+	 * canModifyInventory()
+	 * 	- returns false because class is manager
+	 */
+    @Override
+	public boolean canProcessSale() {return false;}
 	
 } // end of Manager class
