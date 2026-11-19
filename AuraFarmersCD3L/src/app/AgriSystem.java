@@ -4,11 +4,10 @@ import model.Category;
 import model.Clerk;
 import model.Inventory;
 import model.InventoryItem;
-import model.Manager;
 import model.Product;
-import model.Role;
 import model.User;
 import persistence.TransactionFileManager;
+import persistence.UserFileManager;
 import persistence.InventoryFileManager;
 import service.InventoryService;
 import service.ProductService;
@@ -44,6 +43,7 @@ public class AgriSystem {
     	
         InventoryFileManager inventoryFileManager = new InventoryFileManager("data");
         TransactionFileManager transactionFileManager = new TransactionFileManager("data");
+        UserFileManager userFileManager = new UserFileManager("data");
         Inventory inventory = new Inventory();
         
         // check if file is empty
@@ -62,10 +62,7 @@ public class AgriSystem {
         productService = new ProductService(inventoryService);
         transactionService = new TransactionService(inventoryService, transactionFileManager);
         
-        User manager = new Manager("manager","manager123","m");
-        User clerk = new Clerk("clerk","clerk123","c");
-        users.add(manager);
-        users.add(clerk);
+        users = userFileManager.loadUsers();
         
     } // end of constructor method
     

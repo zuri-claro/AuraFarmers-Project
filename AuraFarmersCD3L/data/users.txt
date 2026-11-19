@@ -1,0 +1,8 @@
+MANAGER|manager|Mr. Manager|manager123
+CLERK|clerk|Sir Clerk|clerk123
+MANAGER|yukiclemente|Yuki|password
+MANAGER|zurielclaro|Zuri|password
+MANAGER|abigaillicanda|Abby|password
+CLERK|avagarganta|Ava|password
+CLERK|james_nmj|James|password
+CLERK|allen_kalbo|Allen|password

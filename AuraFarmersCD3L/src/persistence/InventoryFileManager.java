@@ -62,7 +62,16 @@ public class InventoryFileManager {
         	// print all attributes of each inventory item product
             for (InventoryItem item : items) {
                 Product product = item.getProduct();
-                writer.println(product.getProductId() + SEPARATOR + clean(product.getName()) + SEPARATOR + clean(product.getDescription()) + SEPARATOR + product.getPrice() + SEPARATOR + product.getCategory().name() + SEPARATOR + product.isActive() + SEPARATOR + item.getCurrentStock() + SEPARATOR + item.getLowStockThreshold() + SEPARATOR + clean(product.getUnit()));            } // end of for loop
+                writer.println(product.getProductId() + SEPARATOR 
+                		+ clean(product.getName()) + SEPARATOR 
+                		+ clean(product.getDescription()) + SEPARATOR 
+                		+ product.getPrice() + SEPARATOR 
+                		+ product.getCategory().name() + SEPARATOR 
+                		+ product.isActive() + SEPARATOR 
+                		+ item.getCurrentStock() + SEPARATOR 
+                		+ item.getLowStockThreshold() + SEPARATOR 
+                		+ clean(product.getUnit()));            
+            } // end of for loop
             writer.close();
             
         } catch (IOException e) {
