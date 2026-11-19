@@ -58,3 +58,10 @@
 10|-4|33|allen_kalbo|Sale 8|2026-11-20T01:33:41
 14|-3|11|allen_kalbo|Sale 8|2026-11-20T01:33:41
 3|10|14|zurielclaro|zuri donated 10 sweet corn seeds W zuri|2026-11-20T01:36:59
+1|4|14|manager|Void 3|2026-11-20T01:52:17
+11|1|17|manager|Void 3|2026-11-20T01:52:17
+12|1|18|manager|Void 3|2026-11-20T01:52:17
+13|1|18|manager|Void 3|2026-11-20T01:52:17
+14|1|12|manager|Void 3|2026-11-20T01:52:17
+15|3|7|manager|Void 3|2026-11-20T01:52:17
+5|1|15|manager|Void 3|2026-11-20T01:52:17
