@@ -9,6 +9,7 @@ import java.util.List;
 
 /*
  * SalesTransaction class
+ * 	- contains all details related a customer transaction
  */
 public class SalesTransaction {
 
