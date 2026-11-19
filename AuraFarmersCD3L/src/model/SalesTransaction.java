@@ -85,4 +85,4 @@ public class SalesTransaction {
 	public LocalTime getTransactionTime() {return timestamp.toLocalTime();}
 
 	public boolean isVoided() {return voided;}
-}
+} // end of SalesTransaction class
