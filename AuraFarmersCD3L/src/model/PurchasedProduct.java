@@ -1,11 +1,11 @@
 package model;
 
 /*
- * SaleLine class
+ * PurchasedItem class
  * 	- to be used for transactions
  * 	- keeps track of the product the customer bought, its price and quantity
  */
-public class SaleLine {
+public class PurchasedProduct {
 	
 	// ATTRIBUTES
 	private final int productId;
@@ -15,10 +15,10 @@ public class SaleLine {
 	
 	// METHODS
 	/*
-	 * SaleLine(int, String, double, int)
+	 * PurchasedItem(int, String, double, int)
 	 * 	- constructor method
 	 */
-	public SaleLine(int productId, String productName, double unitPrice, int quantity) {
+	public PurchasedProduct(int productId, String productName, double unitPrice, int quantity) {
 		this.productId = productId;
 		this.productName = productName;
 		this.unitPrice = unitPrice;
@@ -38,11 +38,11 @@ public class SaleLine {
 	public int getQuantity() {return quantity;}
 
 	/*
-	 * getLineTotal()
+	 * getTotal()
 	 * 	- returns the total price rounded to 2 decimal places
 	 */
-	public double getLineTotal() {
+	public double getTotal() {
 		return Math.round(unitPrice * quantity * 100.0) / 100.0;
 	} // end of getLineTotal
 	
-} // end of SaleLine class
+} // end of PurchasedItem class
