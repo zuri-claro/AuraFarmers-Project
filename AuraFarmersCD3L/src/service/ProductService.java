@@ -7,6 +7,7 @@ import model.Category;
 import model.Inventory;
 import model.InventoryItem;
 import model.Product;
+import model.StatusFilter;
 import model.StockMovement;
 import model.User;
 
@@ -146,30 +147,30 @@ public class ProductService {
 	 * 		true = also inactive ones (what the Manager sees)
 	 */
 	public List<InventoryItem> search(String text, Category category, boolean includeInactive) {
-		
-		String query = text == null ? "" : text.trim().toLowerCase();
-		List<InventoryItem> results = new ArrayList<>();
-		
-		for (InventoryItem item : inventory.getItems()) {
-			
-			Product product = item.getProduct();
-			
-			if (!includeInactive && !product.isActive()) {
-				continue;
-			} // end of if statement
-			if (category != null && product.getCategory() != category) {
-				continue;
-			} // end of if statement
-			if (!query.isEmpty() && !matches(product, query)) {
-				continue;
-			} // end of if statement
-			
-			results.add(item);
-			
-		} // end of for loop
-		
-		return results;
-		
+	    return search(text, category, includeInactive ? StatusFilter.ALL : StatusFilter.ACTIVE);
+	}
+
+	// status can be ACTIVE, INACTIVE, or ALL (the dropdown of the Product Management screen)
+	public List<InventoryItem> search(String text, Category category, StatusFilter status) {
+
+	    String query = text == null ? "" : text.trim().toLowerCase();
+	    List<InventoryItem> results = new ArrayList<>();
+
+	    for (InventoryItem item : inventory.getItems()) {
+	        Product product = item.getProduct();
+
+	        if (status != null && !status.matches(product.isActive())) {
+	            continue;
+	        }
+	        if (category != null && product.getCategory() != category) {
+	            continue;
+	        }
+	        if (!query.isEmpty() && !matches(product, query)) {
+	            continue;
+	        }
+	        results.add(item);
+	    }
+	    return results;
 	} // end of search
 	
 	/*
