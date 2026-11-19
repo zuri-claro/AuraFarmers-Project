@@ -86,4 +86,14 @@ public class SalesTransaction {
 	public LocalTime getTransactionTime() {return timestamp.toLocalTime();}
 
 	public boolean isVoided() {return voided;}
+	
+	/*
+	 * markVoided(String, LocalDateTime)
+	 */
+	public void markVoided(String byUsername, LocalDateTime when) {
+		this.voided = true;
+		this.voidedBy = byUsername;
+		this.voidedAt = when.withNano(0);
+	}
+	
 } // end of SalesTransaction class
