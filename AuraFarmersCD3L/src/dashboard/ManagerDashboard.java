@@ -1,14 +1,13 @@
 package dashboard;
 
-import model.DateRange;
-import model.Manager;
 import model.Clerk;
-import model.User;
+import model.DateRange;
 import model.Inventory;
 import model.InventoryItem;
+import model.Manager;
 import model.Product;
 import model.StockMovement;
-
+import model.User;
 import service.InventoryService;
 import service.TransactionService;
 

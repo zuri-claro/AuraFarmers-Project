@@ -1,5 +1,17 @@
-1|6|26|manager|test|2026-11-13T10:00:03
-1|-23|3|manager|another test|2026-11-14T13:21:48
-10|3|23|manager|i found 3 hand trowels on the side of the road|2026-11-18T14:35:55
-15|-8|12|clerk|Sale 1|2026-11-19T19:02:25
-13|-1|19|clerk|Sale 1|2026-11-19T19:02:25
+1|5|25|manager|found 5 tomato seeds on the side of the road|2026-11-19T22:55:56
+10|19|39|manager|had to borrow a hand trowel|2026-11-19T22:56:17
+1|-2|23|clerk|Sale 1|2026-11-19T22:57:29
+3|-3|17|clerk|Sale 1|2026-11-19T22:57:29
+14|-1|19|clerk|Sale 1|2026-11-19T22:57:29
+13|-1|19|clerk|Sale 1|2026-11-19T22:57:29
+4|-2|18|avagarganta|Sale 2|2026-11-19T22:58:45
+17|-16|4|avagarganta|Sale 2|2026-11-19T22:58:45
+16|-8|12|avagarganta|Sale 2|2026-11-19T22:58:45
+7|-1|19|avagarganta|Sale 2|2026-11-19T22:58:45
+1|-4|19|avagarganta|Sale 3|2026-11-19T22:59:46
+11|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46
+12|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46
+13|-1|18|avagarganta|Sale 3|2026-11-19T22:59:46
+14|-1|18|avagarganta|Sale 3|2026-11-19T22:59:46
+15|-3|17|avagarganta|Sale 3|2026-11-19T22:59:46
+5|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46

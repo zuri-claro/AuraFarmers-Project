@@ -9,8 +9,8 @@ import java.util.Map;
 
 import model.DateRange;
 import model.InventoryItem;
-import model.Role;
 import model.PurchasedProduct;
+import model.Role;
 import model.SalesTransaction;
 import model.User;
 import persistence.TransactionFileManager;

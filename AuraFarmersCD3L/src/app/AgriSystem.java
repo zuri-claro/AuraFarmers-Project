@@ -46,15 +46,18 @@ public class AgriSystem {
         UserFileManager userFileManager = new UserFileManager("data");
         Inventory inventory = new Inventory();
         
-        // check if file is empty
-        if (inventoryFileManager.hasSavedItems()) { // if the file isnt empty, load what was saved before
-            for (InventoryItem item : inventoryFileManager.loadItems()) {
+        // load whatever was saved before (empty list if the file is missing, empty, or unreadable)
+        List<InventoryItem> savedItems = inventoryFileManager.loadItems();
+        
+        if (!savedItems.isEmpty()) { // something was saved before, so use it
+            for (InventoryItem item : savedItems) {
                 inventory.addItem(item);
             } // end of for loop
             
-        } else { // if empty, just add products
-        	this.addProducts(inventory);
+        } else { // nothing usable saved (first run or file was emptied), so reset to the default products
+            this.addProducts(inventory);
             inventoryFileManager.saveItems(inventory.getItems());
+            inventoryFileManager.saveMovements(new ArrayList<>()); // old movements would point to stock that no longer exists
             
         } // end of if statement
 

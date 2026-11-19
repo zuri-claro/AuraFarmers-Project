@@ -1,10 +1,5 @@
 package persistence;
 
-import model.Category;
-import model.InventoryItem;
-import model.Product;
-import model.StockMovement;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +9,11 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Category;
+import model.InventoryItem;
+import model.Product;
+import model.StockMovement;
 
 /*
  * InventoryFileManager
@@ -47,7 +47,7 @@ public class InventoryFileManager {
      * 	- returns if the program has been run before and saved its inventory.
      */
     public boolean hasSavedItems() {
-        return itemsFile.exists();
+        return itemsFile.exists() && itemsFile.length() > 0;
     } // end of hasSavedItems
 
     /*

@@ -1,8 +1,5 @@
 package persistence;
 
-import model.PurchasedProduct;
-import model.SalesTransaction;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,6 +9,9 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.PurchasedProduct;
+import model.SalesTransaction;
 
 /*
  * TransactionFileManager class

@@ -8,13 +8,16 @@ import ui.LoginScreen;
 public class Main extends Application{
 	
 	@Override
-    public void start(Stage stage) {
-		AgriSystem system = AgriSystem.getInstance();
+	public void start(Stage stage) {
 		
-        stage.setTitle("Agriculture Data Management System");
-        stage.setScene(new Scene(new LoginScreen(system, stage), 900, 560));
-        stage.show();
-		
+	    AgriSystem system = AgriSystem.getInstance();
+
+	    stage.setTitle("Aura Farm");
+	    stage.setScene(new Scene(new LoginScreen(system, stage), 1100, 700));
+	    stage.setMinWidth(1000);
+	    stage.setMinHeight(650);
+	    stage.show();
+	    
 	} // end of start
 	
     public static void main(String[] args) {
