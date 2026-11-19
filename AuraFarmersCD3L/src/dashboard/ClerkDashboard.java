@@ -3,11 +3,14 @@ package dashboard;
 /*
  * ClerkDashboard
  * 	- extends Dashboard
+ * 	- 3 buttons on top: Dashboard, Inventory, Transactions
+ * 	- the Dashboard screen has the "+ New Sale" button, Summary, Recent Transactions, and Product Catalog
  */
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -17,10 +20,9 @@ import javafx.scene.control.ScrollPane;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javafx.scene.control.Alert;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,7 +32,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import app.AgriSystem;
 import model.*;
 import service.InventoryService;
+import service.ProductService;
 import service.TransactionService;
+import ui.InventoryScreen;
+import ui.NewSaleScreen;
+import ui.TransactionScreen;
 
 public class ClerkDashboard extends Dashboard {
 	// attributes
@@ -40,131 +46,124 @@ public class ClerkDashboard extends Dashboard {
     private final Label salesTodayValue = new Label("0");
     private final Label transactionsValue = new Label("0");
     private final Label voidedValue = new Label("0");
+    private final Label asOfLabel = new Label();
     
-    // for new purchase entries
+    // product catalog and its filters
     private TableView<InventoryItem> productCatalog;
-    private final Label selectedProductValue = new Label("None");
-    private final VBox purchaseItems = new VBox(5);
-    private final Label totalAmountValue = new Label("₱0.00");
-    private double totalAmount = 0.0;
-    private final Label changeValue = new Label("₱0.00");
+    private final TextField searchField = new TextField();
+    private final ComboBox<String> categoryBox = new ComboBox<>();
+    private final ComboBox<StatusFilter> statusBox = new ComboBox<>();
+    private static final String ALL_CATEGORIES = "All Categories";
+    private static final int RECENT_COUNT = 10; // how many rows the Recent Transactions table shows
     
     private final ObservableList<SalesTransaction> transactionHistory = FXCollections.observableArrayList();
+    
+    // buttons on top
+    private Button dashboardButton;
+    private Button inventoryButton;
+    private Button transactionsButton;
     
     //constructor
     public ClerkDashboard(Clerk clerk, InventoryService inventoryService) {
 			this.clerk = clerk;
 			this.inventoryService = inventoryService;
 			this.inventory = inventoryService.getInventory();
+			
+			// filters of the product catalog (made once so they keep their values)
+	        searchField.setPromptText("Search by Product ID or name...");
+	        searchField.setPrefWidth(250);
+	        categoryBox.getItems().add(ALL_CATEGORIES);
+	        for (Category c : Category.values()) {
+	            categoryBox.getItems().add(c.toString());
+	        }
+	        categoryBox.setValue(ALL_CATEGORIES);
+	        statusBox.getItems().addAll(StatusFilter.values());
+	        statusBox.setValue(StatusFilter.ACTIVE);
+	        
+	        searchField.setOnKeyReleased(e -> refreshCatalog());
+	        categoryBox.setOnAction(e -> refreshCatalog());
+	        statusBox.setOnAction(e -> refreshCatalog());
+			
+			createButtons();
 			buildDashboard();
     }
     
     // methods
-    private void buildDashboard() {
-        transactionHistory.setAll(transactions().getByClerk(clerk.getUsername()));
-        refreshStats();        
-        
-        setTop(createHeader("Clerk Dashboard", "Welcome, " + clerk.getDisplayName()));
-
-        //keeping track of current sales, number of transactions, and number of voided transactions
-        HBox stats = createStatRow(
-        		createStatCard("Sales Today", salesTodayValue),
-        		createStatCard("Transactions", transactionsValue),
-        		createStatCard("Voided", voidedValue)
-        );
-
-        // buttons
-        Button historyBtn = new Button("Transaction History");
-        Button voidBtn = new Button("Void Transaction");
-
-        //creates a table for viewing the transaction history
-        TableView<SalesTransaction> historyTable = createTransactionTable();
-        historyTable.setVisible(false);
-        historyTable.setManaged(false);
-        
-        // when clicking the Transaction History button, the transaction history appears/disappears
-        historyBtn.setOnAction(event -> {
-            boolean isVisible = historyTable.isVisible();
-            historyTable.setVisible(!isVisible);
-            historyTable.setManaged(!isVisible);
-        });
-        historyBtn.setPrefWidth(200);
-        historyBtn.setStyle(
-                "-fx-background-color: #542020;" +
-                "-fx-text-fill: white;" +
-                "-fx-padding: 10px 15px;"
-        );
-        
-        // select a row on the transaction history table. once selected, if void btn is clicked, that transaction becomes void
-        voidBtn.setOnAction(event -> {
-            SalesTransaction selectedTransaction = historyTable.getSelectionModel().getSelectedItem();
-
-            if (selectedTransaction == null) return;
-
-            try {
-                // puts the stock back, logs the movements, and marks the transaction voided
-                transactions().voidTransaction(clerk, selectedTransaction.getTransactionId());
-            }
-            catch (RuntimeException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
-                return;
-            }
-
-            transactionHistory.remove(selectedTransaction);
-            refreshStats();
-            productCatalog.refresh();
-        });        
-        voidBtn.setPrefWidth(200);
-        voidBtn.setStyle(
-                "-fx-background-color: #542020;" +
-                "-fx-text-fill: white;" +
-                "-fx-padding: 10px 15px;"
-        );
-        
-        VBox actions = new VBox(
-        		15,
-        		historyBtn,
-        		voidBtn,
-        		historyTable
-        );
-        
-        // creates the "Product Catalog" indicator with a styled label
-        Label catalogLabel = new Label("Product Catalog");
-        catalogLabel.setMaxWidth(Double.MAX_VALUE);
-        catalogLabel.setAlignment(Pos.CENTER);
-        catalogLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center;");
-        
-        // creates a product catalog table
-        productCatalog = createProductCatalog();
-        
-        // creates a separate section for processing purchases
-        VBox purchaseEntry = createPurchaseEntry();
-        
-        VBox mainContent = new VBox(
-        		20,
-                stats,
-                catalogLabel,
-                productCatalog,
-                purchaseEntry,
-                actions
-        );
-        
-        VBox.setMargin(catalogLabel, new Insets(20, 0, 0, 0));
-        VBox.setMargin(purchaseEntry, new Insets(20, 0, 0, 0));
-        VBox.setMargin(actions, new Insets(20, 0, 0, 0));
-        mainContent.setPadding(new Insets(20));
-        ScrollPane scrollPane = new ScrollPane(mainContent);
-        scrollPane.setFitToWidth(true);
-        setCenter(scrollPane);
+    
+    // creates the 3 buttons on top and what each one opens
+    private void createButtons() {
+    	List<Button> nav = createNavBar("Dashboard", "Inventory", "Transactions");
+    	dashboardButton = nav.get(0);
+    	inventoryButton = nav.get(1);
+    	transactionsButton = nav.get(2);
+    	
+    	// a new screen is made every time a button is clicked, so the data is always up to date
+    	dashboardButton.setOnAction(e -> buildDashboard());
+    	inventoryButton.setOnAction(e -> showScreen(inventoryButton, new InventoryScreen(AgriSystem.getInstance())));
+    	transactionsButton.setOnAction(e -> showScreen(transactionsButton, new TransactionScreen(AgriSystem.getInstance())));
     }
     
-    // creates a product catalog showing the product name, category, price, available stock, and availability status
+    // builds the Dashboard screen: welcome, + New Sale, as of, summary, recent transactions, product catalog
+    private void buildDashboard() {
+        transactionHistory.setAll(getRecentTransactions());
+        refreshStats();        
+        
+        Label welcome = new Label("Welcome, " + clerk.getDisplayName() + "!");
+        
+        // + New Sale opens the cart screen
+        Button newSaleBtn = new Button("+ New Sale");
+        newSaleBtn.setOnAction(event -> showScreen(null, createPurchaseEntry()));
+
+        // keeping track of today's sales, number of transactions, and number of voided transactions
+        VBox summary = new VBox(5,
+        		new Label("SUMMARY"),
+        		createStatColumn(
+        				createStatCard("Today's Sales", salesTodayValue),
+        				createStatCard("Transactions Today", transactionsValue),
+        				createStatCard("Voided Today", voidedValue)));
+
+        // creates a table for viewing this clerk's most recent transactions
+        TableView<SalesTransaction> historyTable = createTransactionTable();
+        VBox recent = new VBox(5, new Label("RECENT TRANSACTIONS"), historyTable);
+        
+        HBox topRow = new HBox(30, summary, recent);
+        
+        // creates a product catalog table with its search bar and dropdowns
+        productCatalog = createProductCatalog();
+        refreshCatalog();
+        HBox filters = new HBox(10, searchField, categoryBox, statusBox);
+        
+        VBox mainContent = new VBox(
+        		15,
+        		welcome,
+        		newSaleBtn,
+        		asOfLabel,
+                topRow,
+                new Label("PRODUCT CATALOG"),
+                filters,
+                productCatalog
+        );
+        
+        mainContent.setPadding(new Insets(10));
+        ScrollPane scrollPane = new ScrollPane(mainContent);
+        scrollPane.setFitToWidth(true);
+        showScreen(dashboardButton, scrollPane);
+    }
+    
+    // creates a product catalog showing the product id, name, category, unit, price, stock, and status
     private TableView<InventoryItem> createProductCatalog() {
 
         TableView<InventoryItem> table = new TableView<>();
+        
+        TableColumn<InventoryItem, String> idColumn =
+            new TableColumn<>("Product ID");
+
+        idColumn.setCellValueFactory(cell ->
+    		new SimpleStringProperty(
+                cell.getValue().getProduct().getDisplayId()));
 
         TableColumn<InventoryItem, String> productColumn =
-            new TableColumn<>("Product Name");
+            new TableColumn<>("Name");
 
         productColumn.setCellValueFactory(cell ->
     		new SimpleStringProperty(
@@ -176,16 +175,23 @@ public class ClerkDashboard extends Dashboard {
         categoryColumn.setCellValueFactory(cell ->
             new SimpleStringProperty(
                 cell.getValue().getProduct().getCategory().toString()));
+        
+        TableColumn<InventoryItem, String> unitColumn =
+            new TableColumn<>("Unit");
+
+        unitColumn.setCellValueFactory(cell ->
+            new SimpleStringProperty(
+                cell.getValue().getProduct().getUnit()));
 
         TableColumn<InventoryItem, String> priceColumn =
             new TableColumn<>("Price");
 
         priceColumn.setCellValueFactory(cell ->
             new SimpleStringProperty(
-                "₱" + cell.getValue().getProduct().getPrice()));
+                formatPeso(cell.getValue().getProduct().getPrice())));
 
         TableColumn<InventoryItem, Integer> stockColumn =
-            new TableColumn<>("Available Stock");
+            new TableColumn<>("Stock");
 
         stockColumn.setCellValueFactory(cell ->
             new SimpleIntegerProperty(
@@ -194,31 +200,18 @@ public class ClerkDashboard extends Dashboard {
         TableColumn<InventoryItem, String> statusColumn =
             new TableColumn<>("Status");
 
-        statusColumn.setCellValueFactory(cell -> {
-            InventoryItem item = cell.getValue();
-            String status;
+        // getStatus() returns Inactive, Out of Stock, Low Stock, or Available
+        statusColumn.setCellValueFactory(cell ->
+            new SimpleStringProperty(
+                cell.getValue().getStatus()));
 
-            if (item.getCurrentStock() <= 0) {
-                status = "Out of Stock";
-            }
-            else if (item.isLowStock()) {
-                status = "Low Stock";
-            }
-            else {
-                status = "Available";
-            }
-
-            return new SimpleStringProperty(status);
-        });
-
-        table.getColumns().addAll(
-                productColumn,
-                categoryColumn,
-                priceColumn,
-                stockColumn,
-                statusColumn);
-
-        table.setItems(inventory.getItems());
+        table.getColumns().add(idColumn);
+        table.getColumns().add(productColumn);
+        table.getColumns().add(categoryColumn);
+        table.getColumns().add(unitColumn);
+        table.getColumns().add(priceColumn);
+        table.getColumns().add(stockColumn);
+        table.getColumns().add(statusColumn);
 
         table.setMinHeight(250);
         table.setPrefHeight(250);
@@ -226,266 +219,88 @@ public class ClerkDashboard extends Dashboard {
         return table;
     }
     
-    // acts as an online cash register/cart for processing online purchases
-    private VBox createPurchaseEntry() {
-    	ArrayList<InventoryItem> itemsToBuy = new ArrayList<>();
-    	ArrayList<Integer> amtPerItem = new ArrayList<>();
+    // searches the product catalog again using the search bar and dropdowns
+    private void refreshCatalog() {
+    	if (productCatalog == null) return;
     	
-        Label purchaseLabel = new Label("PURCHASE ENTRY");
-        Label selectedProductLabel = new Label("Selected Product:");
-        Label currentPurchaseLabel = new Label("Current Purchase");
-        Label totalLabel = new Label("Total Amount:");
-
-        Button completeBtn = new Button("Complete Transaction");
-        
-        TextField quantityField = new TextField();
-        quantityField.setPromptText("Enter Quantity");
-
-        Label cashReceivedLabel = new Label("Cash Received:");
-
-        TextField cashReceivedField = new TextField();
-        cashReceivedField.setPromptText("Enter Cash Amount");
-
-        Label changeLabel = new Label("Change:");
-        Label availabilityLabel = new Label();
-        
-        productCatalog.getSelectionModel().selectedItemProperty().addListener((obs, oldItem, newItem) -> {
-        	if (newItem == null) {
-                selectedProductValue.setText("None");
-                availabilityLabel.setText("");
-                return;
-            }
-            selectedProductValue.setText(newItem.getProduct().getName());
-            
-            int quantityAlreadyInCart = 0;
-            for (int i = 0; i < itemsToBuy.size(); i++) {
-                if (itemsToBuy.get(i).getProductId() == newItem.getProductId()) {
-                    quantityAlreadyInCart += amtPerItem.get(i);
-                }
-            }
-
-            int remainingStock = newItem.getCurrentStock() - quantityAlreadyInCart;
-            if (remainingStock <= 0) {
-                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Product unavailable for purchase!");
-            }
-            else {
-                availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Product available for purchase!");
-            }
-        });
-
-        Button addButton = new Button("Add Item");
-
-        addButton.setOnAction(event -> {
-            InventoryItem product = productCatalog.getSelectionModel().getSelectedItem();
-            
-            if (product == null) {
-                return;
-            }
-            
-            InventoryItem checkAvailability = inventory.findByProductId(product.getProductId());
-            int itemStock = checkAvailability.getCurrentStock();
-
-            int quantityAlreadyInCart = 0;
-            for (int i = 0; i < itemsToBuy.size(); i++) {
-                if (itemsToBuy.get(i).getProductId() == product.getProductId()) {
-                    quantityAlreadyInCart += amtPerItem.get(i);
-                }
-            }
-            int remainingStock = itemStock - quantityAlreadyInCart;
-            
-            int quantity;
-            try {
-                quantity = Integer.parseInt(quantityField.getText());
-            }
-            catch(NumberFormatException e) {
-                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Please enter a valid quantity!");
-                return;
-            }
-            
-            if (quantity <= 0) {
-            	availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Invalid purchase quantity!");
-                return;
-            }
-            if (quantity > remainingStock) {
-            	availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
-            	availabilityLabel.setText("Purchase quantity exceeds stock!");
-            	return;
-            }
-            
-        	availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
-        	availabilityLabel.setText("Item has been added to cart.");
-            
-            double itemTotal = product.getProduct().getPrice() * quantity;
-
-            itemsToBuy.add(product);
-            amtPerItem.add(quantity);
-            
-            int updatedRemainingStock = remainingStock - quantity;
-            if (updatedRemainingStock <= 0) {
-                availabilityLabel.setStyle("-fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Product is now out of stock.");
-            }
-            else {
-                availabilityLabel.setStyle("-fx-text-fill: green; -fx-font-weight: bold; -fx-font-size: 14px;");
-                availabilityLabel.setText("Item has been added to cart. Remaining stock: " + updatedRemainingStock);
-            }
-
-            totalAmount += itemTotal;
-            totalAmountValue.setText(String.format("₱%.2f", totalAmount));
-          
-            purchaseItems.getChildren().add(new Label(product.getProduct().getName() + " x " + quantity));
-        });
-        
-        completeBtn.setOnAction(event -> {
-            if (itemsToBuy.isEmpty()) return;
-
-            double cashReceived;
-            try {
-                cashReceived = Double.parseDouble(cashReceivedField.getText());
-            }
-            catch(NumberFormatException e) {
-                return;
-            }
-
-            // one entry per product (the same product added twice is merged)
-            Map<Integer, Integer> cart = new LinkedHashMap<>();
-            for (int i = 0; i < itemsToBuy.size(); i++) {
-                cart.merge(itemsToBuy.get(i).getProductId(), amtPerItem.get(i), Integer::sum);
-            }
-
-            SalesTransaction transaction;
-            try {
-                // checks cash and stock, lowers the stock, logs the movements, and saves the sale
-                transaction = transactions().checkout(clerk, cart, cashReceived);
-            }
-            catch (RuntimeException e) {
-                changeValue.setText(e.getMessage());
-                return;
-            }
-
-            changeValue.setText(String.format("₱%.2f", transaction.getChangeGiven()));
-            transactionHistory.add(transaction);
-            refreshStats();
-
-            purchaseItems.getChildren().clear();
-            totalAmount = 0.0;
-            totalAmountValue.setText("₱0.00");
-            productCatalog.getSelectionModel().clearSelection();
-            selectedProductValue.setText("None");
-
-            productCatalog.refresh();
-
-            itemsToBuy.clear();
-            amtPerItem.clear();
-            quantityField.clear();
-            cashReceivedField.clear();
-        });
-        
-        VBox purchaseEntry = new VBox(
-            10,
-            purchaseLabel,
-            selectedProductLabel,
-            selectedProductValue,
-            availabilityLabel,
-            quantityField,
-            addButton,
-            currentPurchaseLabel,
-            purchaseItems,
-            totalLabel,
-            totalAmountValue,
-            cashReceivedLabel,
-            cashReceivedField,
-            changeLabel,
-            changeValue,
-            completeBtn
-        );
-        
-        purchaseEntry.setPadding(new Insets(20));
-        purchaseEntry.setStyle("-fx-background-color: white;" + "-fx-border-color: #ADD8E6;" + "-fx-border-width: 1;" +
-            "-fx-border-radius: 10;" + "-fx-background-radius: 10;");
-        purchaseLabel.setMaxWidth(Double.MAX_VALUE);
-        purchaseLabel.setAlignment(Pos.CENTER);
-        purchaseLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center;");
-        return purchaseEntry;
+    	Category category = null; // null means all categories
+    	for (Category c : Category.values()) {
+    		if (c.toString().equals(categoryBox.getValue())) {
+    			category = c;
+    		}
+    	}
+    	
+    	ProductService products = AgriSystem.getInstance().getProductService();
+    	productCatalog.setItems(FXCollections.observableArrayList(
+    			products.search(searchField.getText(), category, statusBox.getValue())));
+    	productCatalog.refresh();
     }
     
-    // creates a transaction table which allows the user to view transaction history and details
+    // acts as an online cash register/cart for processing purchases (the New Sale screen)
+    private Node createPurchaseEntry() {
+    	return new NewSaleScreen(AgriSystem.getInstance());
+    }
+    
+    // creates the Recent Transactions table (Transaction ID, Time, Total, Status)
     private TableView<SalesTransaction> createTransactionTable() {
-        TableColumn<SalesTransaction, String> dateColumn =
-            new TableColumn<>("Date");
+    	
+        TableColumn<SalesTransaction, String> idColumn =
+            new TableColumn<>("Transaction ID");
 
-        dateColumn.setCellValueFactory(cell ->
+        idColumn.setCellValueFactory(cell ->
         	new SimpleStringProperty(
-            		cell.getValue().getTransactionDate().toString()));
-        
+            		cell.getValue().getDisplayId()));
         
         TableColumn<SalesTransaction, String> timeColumn =
             new TableColumn<>("Time");
 
         timeColumn.setCellValueFactory(cell ->
             new SimpleStringProperty(
-            		cell.getValue().getTransactionTime().toString()));
-        
-        
-        TableView<SalesTransaction> table = new TableView<>();
-
-        TableColumn<SalesTransaction, String> clerkColumn =
-            new TableColumn<>("Clerk");
-
-        clerkColumn.setCellValueFactory(cell ->
-            new SimpleStringProperty(
-            		cell.getValue().getClerkName()));
-        
+            		cell.getValue().getTimestamp().format(DateFormats.TIME)));
         
         TableColumn<SalesTransaction, String> totalColumn =
             new TableColumn<>("Total");
 
         totalColumn.setCellValueFactory(cell ->
             new SimpleStringProperty(
-                String.format("₱%.2f", cell.getValue().getTotalAmount())
+                formatPeso(cell.getValue().getTotalAmount())
             ));
-
         
-        TableColumn<SalesTransaction, String> cashColumn =
-            new TableColumn<>("Cash Received");
+        TableColumn<SalesTransaction, String> statusColumn =
+            new TableColumn<>("Status");
 
-        cashColumn.setCellValueFactory(cell ->
+        statusColumn.setCellValueFactory(cell ->
             new SimpleStringProperty(
-        		String.format("₱%.2f",cell.getValue().getCashReceived())
+                cell.getValue().isVoided() ? "VOIDED" : "VALID"
             ));
         
+        TableView<SalesTransaction> table = new TableView<>();
         
-        TableColumn<SalesTransaction, String> changeColumn =
-            new TableColumn<>("Change");
-
-        changeColumn.setCellValueFactory(cell ->
-            new SimpleStringProperty(
-                String.format("₱%.2f",cell.getValue().getChangeGiven())
-            ));
+        idColumn.setPrefWidth(110);
+        timeColumn.setPrefWidth(80);
+        totalColumn.setPrefWidth(100);
+        statusColumn.setPrefWidth(80);
         
-        dateColumn.setPrefWidth(125);
-        timeColumn.setPrefWidth(125);
-        clerkColumn.setPrefWidth(125);
-        totalColumn.setPrefWidth(125);
-        cashColumn.setPrefWidth(125);
-        changeColumn.setPrefWidth(125);
-        
-        table.getColumns().addAll(
-                dateColumn,
-                timeColumn,
-                clerkColumn,
-                totalColumn,
-                cashColumn,
-                changeColumn
-        );
+        table.getColumns().add(idColumn);
+        table.getColumns().add(timeColumn);
+        table.getColumns().add(totalColumn);
+        table.getColumns().add(statusColumn);
 
         table.setItems(transactionHistory);
+        table.setPrefHeight(180);
 
         return table;
+    }
+    
+    // this clerk's latest transactions (valid and voided), newest first
+    private List<SalesTransaction> getRecentTransactions() {
+    	List<SalesTransaction> recent = new java.util.ArrayList<>();
+    	for (SalesTransaction t : transactions().getAll()) {
+    		if (t.getClerkUsername().equals(clerk.getUsername()) && recent.size() < RECENT_COUNT) {
+    			recent.add(t);
+    		}
+    	}
+    	return recent;
     }
     
     // shared transaction service
@@ -493,11 +308,12 @@ public class ClerkDashboard extends Dashboard {
         return AgriSystem.getInstance().getTransactionService();
     }
 
-    // refreshes Sales Today / Transactions / Voided from this clerk's saved transactions
+    // refreshes Today's Sales / Transactions Today / Voided Today from this clerk's saved transactions
     private void refreshStats() {
-        salesTodayValue.setText(String.format("₱%.2f", transactions().totalSales(clerk.getUsername(), DateRange.TODAY)));
+        salesTodayValue.setText(formatPeso(transactions().totalSales(clerk.getUsername(), DateRange.TODAY)));
         transactionsValue.setText(String.valueOf(transactions().countTransactions(clerk.getUsername(), false, DateRange.TODAY)));
         voidedValue.setText(String.valueOf(transactions().countTransactions(clerk.getUsername(), true, DateRange.TODAY)));
+        asOfLabel.setText("As of " + LocalDateTime.now().format(DateFormats.AS_OF));
     }
   
 } // end of ClerkDashboard class

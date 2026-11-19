@@ -37,7 +37,7 @@ public abstract class User {
 	public String getUsername() {return username;}
 	public String getDisplayName() {return displayName;}
 	public Role getRole() {return role;}
-	
+		
 	/*
 	 * checkPassword(String)
 	 * 	- abstract method that checks if user input is same as user's password
@@ -66,5 +66,7 @@ public abstract class User {
     public String toString() {
         return this.displayName + " (" + role + ")";
     } // end of toString
+    
+	public String getPassword() {return password;} // only used for project presentation, the actual application does not need this
 	
 } // end of User class

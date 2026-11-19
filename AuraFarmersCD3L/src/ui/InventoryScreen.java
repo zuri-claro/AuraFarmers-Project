@@ -1,6 +1,7 @@
 package ui;
 
 import app.AgriSystem;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -10,7 +11,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -40,7 +40,7 @@ public class InventoryScreen extends BorderPane {
     private final FilteredList<InventoryItem> filteredItems;
     private final TextField searchField = new TextField();
     private final ComboBox<String> categoryBox = new ComboBox<>();
-    private final CheckBox lowOnlyBox = new CheckBox("Low stock only");
+    private final CheckBox lowOnlyBox = new CheckBox("Low Stock Only");
     private final Label banner = new Label();
 
     private static final String ALL_CATEGORIES = "All Categories";
@@ -69,14 +69,9 @@ public class InventoryScreen extends BorderPane {
      */
     private VBox createTopPart() {
     	
-        Label title = new Label("Inventory");
-        title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-        Label loggedIn = new Label("Logged in as: " + user);
-
         banner.setMaxWidth(Double.MAX_VALUE);
-        banner.setPadding(new Insets(8));
 
-        searchField.setPromptText("Search by name or ID");
+        searchField.setPromptText("Search by Product ID or name...");
         searchField.setPrefWidth(240);
 
         categoryBox.getItems().add(ALL_CATEGORIES);
@@ -91,7 +86,7 @@ public class InventoryScreen extends BorderPane {
         lowOnlyBox.setOnAction(e -> applyFilter());
 
         HBox controls = new HBox(10, searchField, categoryBox, lowOnlyBox);
-        VBox top = new VBox(8, title, loggedIn, banner, controls);
+        VBox top = new VBox(8, banner, controls);
         top.setPadding(new Insets(10));
         return top;
         
@@ -115,9 +110,7 @@ public class InventoryScreen extends BorderPane {
             thresholdButton.setOnAction(e -> onThreshold());
 
             bottom.getChildren().addAll(restockButton, adjustButton, thresholdButton);
-        } else {
-            bottom.getChildren().add(new Label("Read-only view: only a Manager can restock or adjust."));
-        } // end of if else statement
+        } // end of if statement (clerk: read-only, no buttons)
         
         return bottom;
         
@@ -128,30 +121,21 @@ public class InventoryScreen extends BorderPane {
      */
     private void setupTable() {
     	
-        table.getColumns().add(makeColumn("Product ID", 90, "productId"));
+        // product id is shown as AG001 (not just 1)
+        TableColumn<InventoryItem, Object> idColumn = new TableColumn<>("Product ID");
+        idColumn.setPrefWidth(90);
+        idColumn.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getProduct().getDisplayId()));
+        table.getColumns().add(idColumn);
         table.getColumns().add(makeColumn("Product Name", 200, "name"));
         table.getColumns().add(makeColumn("Category", 190, "category"));
         table.getColumns().add(makeColumn("Current Stock", 100, "currentStock"));
         table.getColumns().add(makeColumn("Low-Stock Threshold", 130, "lowStockThreshold"));
-        table.getColumns().add(makeColumn("Status", 80, "status"));
+        table.getColumns().add(makeColumn("Stock Status", 100, "status"));
 
         // SortedList lets user click a column header to sort
         SortedList<InventoryItem> sortedItems = new SortedList<>(filteredItems);
         sortedItems.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedItems);
-
-        // color low-stock rows red
-        table.setRowFactory(tv -> new TableRow<InventoryItem>() {
-            @Override
-            protected void updateItem(InventoryItem item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null || !item.isLowStock()) {
-                    setStyle("");
-                } else {
-                    setStyle("-fx-control-inner-background: #ffd9d9;");
-                } // end of if else statement
-            } // end of updateItem
-        }); // end of .setRowFactory
         
     } // end of setupTable
     
@@ -177,7 +161,8 @@ public class InventoryScreen extends BorderPane {
 
         filteredItems.setPredicate(item -> {
             boolean matchesText = text.isEmpty()
-                    || item.getProduct().getName().toLowerCase().contains(text);
+                    || item.getProduct().getName().toLowerCase().contains(text)
+                    || item.getProduct().getDisplayId().toLowerCase().contains(text);
             boolean matchesCategory = category == null
                     || category.equals(ALL_CATEGORIES)
                     || item.getProduct().getCategory().toString().equals(category);
@@ -196,10 +181,8 @@ public class InventoryScreen extends BorderPane {
         int lowCount = service.getInventory().getLowStockCount();
         if (lowCount > 0) {
             banner.setText(lowCount + " item(s) at or below the low-stock threshold - consider restocking.");
-            banner.setStyle("-fx-background-color: #ffe9b3; -fx-font-weight: bold;");
         } else {
             banner.setText("All stock levels are good.");
-            banner.setStyle("-fx-background-color: #d8f3dc;");
         } // end of if else statement
         
     } // end of refresh

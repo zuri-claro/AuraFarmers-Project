@@ -4,11 +4,10 @@ import model.Category;
 import model.Clerk;
 import model.Inventory;
 import model.InventoryItem;
-import model.Manager;
 import model.Product;
-import model.Role;
 import model.User;
 import persistence.TransactionFileManager;
+import persistence.UserFileManager;
 import persistence.InventoryFileManager;
 import service.InventoryService;
 import service.ProductService;
@@ -42,30 +41,31 @@ public class AgriSystem {
      */
     private AgriSystem() {
     	
-        InventoryFileManager fileManager = new InventoryFileManager("data");
+        InventoryFileManager inventoryFileManager = new InventoryFileManager("data");
+        TransactionFileManager transactionFileManager = new TransactionFileManager("data");
+        UserFileManager userFileManager = new UserFileManager("data");
         Inventory inventory = new Inventory();
         
-        // check if file is empty
-        if (fileManager.hasSavedItems()) { // if the file isnt empty, load what was saved before
-            for (InventoryItem item : fileManager.loadItems()) {
+        // load whatever was saved before (empty list if the file is missing, empty, or unreadable)
+        List<InventoryItem> savedItems = inventoryFileManager.loadItems();
+        
+        if (!savedItems.isEmpty()) { // something was saved before, so use it
+            for (InventoryItem item : savedItems) {
                 inventory.addItem(item);
             } // end of for loop
             
-        } else { // if empty, just add products
-        	this.addProducts(inventory);
-            fileManager.saveItems(inventory.getItems());
+        } else { // nothing usable saved (first run or file was emptied), so reset to the default products
+            this.addProducts(inventory);
+            inventoryFileManager.saveItems(inventory.getItems());
+            inventoryFileManager.saveMovements(new ArrayList<>()); // old movements would point to stock that no longer exists
             
         } // end of if statement
 
-        inventoryService = new InventoryService(inventory, fileManager);
+        inventoryService = new InventoryService(inventory, inventoryFileManager);
         productService = new ProductService(inventoryService);
-        transactionService = new TransactionService(inventoryService, new TransactionFileManager("data"));
+        transactionService = new TransactionService(inventoryService, transactionFileManager);
         
-        // TEMPORARY FOR TESTINGGG - add users
-        User manager = new Manager("manager","manager123","m");
-        User clerk = new Clerk("clerk","clerk123","c");
-        users.add(manager);
-        users.add(clerk);
+        users = userFileManager.loadUsers();
         
     } // end of constructor method
     

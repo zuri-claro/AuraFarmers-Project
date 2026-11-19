@@ -1,10 +1,5 @@
 package persistence;
 
-import model.Category;
-import model.InventoryItem;
-import model.Product;
-import model.StockMovement;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +9,11 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.Category;
+import model.InventoryItem;
+import model.Product;
+import model.StockMovement;
 
 /*
  * InventoryFileManager
@@ -47,7 +47,7 @@ public class InventoryFileManager {
      * 	- returns if the program has been run before and saved its inventory.
      */
     public boolean hasSavedItems() {
-        return itemsFile.exists();
+        return itemsFile.exists() && itemsFile.length() > 0;
     } // end of hasSavedItems
 
     /*
@@ -62,7 +62,16 @@ public class InventoryFileManager {
         	// print all attributes of each inventory item product
             for (InventoryItem item : items) {
                 Product product = item.getProduct();
-                writer.println(product.getProductId() + SEPARATOR + clean(product.getName()) + SEPARATOR + clean(product.getDescription()) + SEPARATOR + product.getPrice() + SEPARATOR + product.getCategory().name() + SEPARATOR + product.isActive() + SEPARATOR + item.getCurrentStock() + SEPARATOR + item.getLowStockThreshold() + SEPARATOR + clean(product.getUnit()));            } // end of for loop
+                writer.println(product.getProductId() + SEPARATOR 
+                		+ clean(product.getName()) + SEPARATOR 
+                		+ clean(product.getDescription()) + SEPARATOR 
+                		+ product.getPrice() + SEPARATOR 
+                		+ product.getCategory().name() + SEPARATOR 
+                		+ product.isActive() + SEPARATOR 
+                		+ item.getCurrentStock() + SEPARATOR 
+                		+ item.getLowStockThreshold() + SEPARATOR 
+                		+ clean(product.getUnit()));            
+            } // end of for loop
             writer.close();
             
         } catch (IOException e) {
