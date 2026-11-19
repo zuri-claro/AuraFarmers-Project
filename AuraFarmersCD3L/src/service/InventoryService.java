@@ -258,5 +258,17 @@ public class InventoryService {
         fileManager.saveMovements(movements);
         
     } // end of saveAll
+    
+    /*
+     * getRecentMovements(int)
+     * 	- returns list of last (count) stock movements
+     */
+    public List<StockMovement> getRecentMovements(int count) {
+        List<StockMovement> recent = new ArrayList<>();
+        for (int i = movements.size() - 1; i >= 0 && recent.size() < count; i--) {
+            recent.add(movements.get(i));
+        }
+        return recent;
+    } // end of getRecentMovements
 
 } // end of InventoryService class
