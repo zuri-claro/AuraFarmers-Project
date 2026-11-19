@@ -42,15 +42,6 @@ import model.User;
 
 public class LoginScreen extends StackPane {
 	
-	// COLORS - to move to dashboard
-	public static final String DARKGREEN = "#2E8B57";
-	public static final String GREEN = "66BB6A";
-	public static final String LIGHTGREEN = "C8E6C9";
-	public static final String ORANGE = "#FF8A65";
-	public static final String PEACH = "#FFCCBC";
-	
-	public static final String GRAY = "#D9D9D9";
-	
 	// ATTRIBUTES
 	private final AgriSystem system;
 	private final Stage stage;
@@ -81,7 +72,7 @@ public class LoginScreen extends StackPane {
 		this.system = system;
 		this.stage = stage;
 		
-		setStyle("-fx-background-color: " + DARKGREEN + ";");
+		setStyle("-fx-background-color: " + Dashboard.DARKGREEN + ";");
 		setPadding(new Insets(40));
 		getChildren().add(buildCard());
 		
@@ -93,7 +84,7 @@ public class LoginScreen extends StackPane {
 	 */
 	private HBox buildCard() {
 		
-		StackPane left = new StackPane(createLogo(250));
+		StackPane left = new StackPane(Dashboard.createLogo(250));
 		left.setPrefWidth(400);
 		
 		VBox right = buildForm();
@@ -103,7 +94,7 @@ public class LoginScreen extends StackPane {
 		card.setAlignment(Pos.CENTER);
 		card.setPadding(new Insets(50));
 		card.setMaxSize(860, 460);
-		card.setStyle("-fx-background-color: " + GRAY + ";" + "-fx-background-radius: 20;");
+		card.setStyle("-fx-background-color: " + Dashboard.GRAY + ";" + "-fx-background-radius: 20;");
 		card.setEffect(new DropShadow(25, Color.rgb(0, 0, 0, 0.3)));
 		return card;
 		
@@ -116,7 +107,7 @@ public class LoginScreen extends StackPane {
 	private VBox buildForm() {
 		
 		Label welcome = new Label("Welcome!");
-		welcome.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: " + DARKGREEN + ";");
+		welcome.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: " + Dashboard.DARKGREEN + ";");
 		
 		Label subtitle = new Label("Sign in to your Account");
 		subtitle.setStyle("-fx-font-size: 18px; -fx-text-fill: #4CAF50;");
@@ -132,21 +123,21 @@ public class LoginScreen extends StackPane {
 		passwordField.setOnAction(e -> onLogin()); // enter signs in
 		
 		Label forgot = new Label("Forgot Password?");
-		forgot.setStyle("-fx-font-size: 17px; -fx-text-fill: " + DARKGREEN + "; -fx-cursor: hand;");
+		forgot.setStyle("-fx-font-size: 16px; -fx-text-fill: " + Dashboard.DARKGREEN + "; -fx-cursor: hand;");
 		forgot.setOnMouseClicked(e -> showUsersPopup());
 		
 		Button signIn = new Button("SIGN IN");
 		signIn.setStyle(
-				"-fx-background-color: " + ORANGE + ";" +
+				"-fx-background-color: " + Dashboard.ORANGE + ";" +
 				"-fx-text-fill: white;" +
-				"-fx-font-size: 17px;" +
+				"-fx-font-size: 16px;" +
 				"-fx-font-weight: bold;" +
 				"-fx-background-radius: 30;" +
 				"-fx-padding: 10 55;" +
 				"-fx-cursor: hand;");
 		signIn.setOnAction(e -> onLogin());
 		
-		errorLabel.setStyle("-fx-text-fill: #C0392B; -fx-font-size: 14px;");
+		errorLabel.setStyle("-fx-text-fill: #C0392B; -fx-font-size: 13px;");
 		errorLabel.setWrapText(true);
 		
 		VBox form = new VBox(14, welcome, subtitle, usernameField, passwordField, forgot, signIn, errorLabel);
@@ -192,6 +183,7 @@ public class LoginScreen extends StackPane {
 	
 	/*
 	 * showUsersPopup()
+	 * 	- only meant for presentation
 	 * 	- pop up with a table of every current user's username and password
 	 */
 	private void showUsersPopup() {
@@ -215,7 +207,7 @@ public class LoginScreen extends StackPane {
 		root.setPadding(new Insets(20));
 		root.setAlignment(Pos.CENTER_LEFT);
 		VBox.setVgrow(table, Priority.ALWAYS);
-		root.setStyle("-fx-background-color: " + GRAY + ";");
+		root.setStyle("-fx-background-color: " + Dashboard.GRAY + ";");
 		
 		popup.initOwner(stage);
 		popup.initModality(Modality.APPLICATION_MODAL);
@@ -224,36 +216,5 @@ public class LoginScreen extends StackPane {
 		popup.showAndWait();
 		
 	} // end of showUsersPopup
-	
-	/*
-	 * createLogo(double)
-	 * 	- loads /resources/logo_name.png
-	 * 	- size is the height of the image; the width follows the image's proportions
-	 */
-	public static Node createLogo(double size) {
-		
-		Image image = null;
-		
-		try {
-			InputStream stream = Dashboard.class.getResourceAsStream("/resources/logo_name.png");
-			if (stream != null) {
-				image = new Image(stream);
-			} // end of if statement
-		} catch (Exception e) {
-			image = null;
-		} // end of try catch
-		
-		// image found: just show it
-		if (image != null && !image.isError()) {
-			ImageView view = new ImageView(image);
-			view.setFitHeight(size);
-			view.setPreserveRatio(true);
-			view.setSmooth(true);
-			return view;
-		} // end of if statement
-		
-		return null;
-		
-	} // end of createLogo
 	
 } // end of LoginScreen class
