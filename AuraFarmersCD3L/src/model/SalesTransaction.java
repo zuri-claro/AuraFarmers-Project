@@ -89,6 +89,14 @@ public class SalesTransaction {
 	public String getTimestampSecondsText() {return timestamp.format(DateFormats.DATE_TIME_SECONDS);}  // 11/14/26 21:04:00
 
 	/*
+	 * getDisplayId()
+	 * 	- returns the id as TS0001, for example
+	 */
+	public String getDisplayId() {
+		return String.format("TS%03d", transactionId);
+	} // end of getDisplayId
+	
+	/*
 	 * isVoided()
 	 * 	- returns if transaction is voided
 	 */
