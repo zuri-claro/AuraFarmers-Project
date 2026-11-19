@@ -430,20 +430,22 @@ public class ManagerDashboard extends Dashboard {
             )
         );
 
-        table.getColumns().addAll(
-            nameColumn,
-            usernameColumn
-        );
-        
-        TableColumn<Clerk, Integer> salesMadeColumn = new TableColumn<>("Sales Made");
+        TableColumn<Clerk, Integer> salesMadeColumn =
+                new TableColumn<>("Sales Made");
+
         salesMadeColumn.setCellValueFactory(cell ->
             new javafx.beans.property.SimpleIntegerProperty(
                 AgriSystem.getInstance().getTransactionService()
-                    .countTransactions(cell.getValue().getUsername(), false, DateRange.ANY_TIME)
+                    .countTransactions(cell.getValue().getUsername(),
+                        false, DateRange.ANY_TIME)
             ).asObject()
         );
 
-        table.getColumns().addAll(nameColumn, usernameColumn, salesMadeColumn);
+        table.getColumns().addAll(
+            nameColumn,
+            usernameColumn,
+            salesMadeColumn
+        );
 
         table.setItems(clerks);
         table.setPrefHeight(180);
