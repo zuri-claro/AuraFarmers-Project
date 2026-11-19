@@ -48,38 +48,6 @@ public class Dashboard extends BorderPane {
 	
 	// ATTRIBUTES
 	private final List<Button> navButtons = new ArrayList<>(); // buttons on top, used to show which screen is open
-	
-	/*
-	 * createLogo(double)
-	 * 	- loads /resources/logo_name.png
-	 * 	- size is the height of the image; the width follows the image's proportions
-	 * 	- returns null if the image is not found (not used in the skeleton gui)
-	 */
-	public static Node createLogo(double size) {
-		
-		Image image = null;
-		
-		try {
-			InputStream stream = Dashboard.class.getResourceAsStream("/resources/logo_name.png");
-			if (stream != null) {
-				image = new Image(stream);
-			} // end of if statement
-		} catch (Exception e) {
-			image = null;
-		} // end of try catch
-		
-		// image found: just show it
-		if (image != null && !image.isError()) {
-			ImageView view = new ImageView(image);
-			view.setFitHeight(size);
-			view.setPreserveRatio(true);
-			view.setSmooth(true);
-			return view;
-		} // end of if statement
-		
-		return null;
-		
-	} // end of createLogo
     
 	/*
 	 * createHeader(String, String)

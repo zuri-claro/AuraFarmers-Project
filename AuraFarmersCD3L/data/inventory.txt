@@ -1,17 +1,17 @@
-1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|20|5|Packet
-2|Pechay Seeds|Seeds for growing pechay|25.0|SEEDS|true|20|5|Packet
-3|Sweet Corn Seeds|Seeds for growing sweet corn|50.0|SEEDS|true|18|5|Packet
-4|Organic Compost|Organic material for improving soil conditions|120.0|FERTILIZERS_SOIL|true|18|5|Bag
-5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|16|5|Bag
-6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|20|5|Bag
+5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|14|5|Bag
+8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|15|5|Pack
+9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|18|5|Bottle
 7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|19|5|Pack
-8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|18|5|Pack
-9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|20|5|Bottle
-10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|39|5|Piece
-11|Pruning Shears|Tool for trimming small branches and stems|180.0|HAND_TOOLS|true|18|5|Piece
-12|Hand Cultivator|Tool for loosening soil and removing weeds|120.0|HAND_TOOLS|true|19|5|Piece
-13|Watering Can|Container used for watering plants|150.0|WATERING|true|19|5|Piece
-14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|18|5|Piece
-15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|15|5|Piece
-16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|8|5|Piece
-17|Plant Labels|Labels for identifying plant varieties|30.0|PLANTING_MATERIALS|true|4|5|Pack
+12|Hand Cultivator|Tool for loosening soil and removing weeds|120.0|HAND_TOOLS|true|17|5|Piece
+10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|33|5|Piece
+14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|11|5|Piece
+16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|0|5|Piece
+4|Organic Compost|Organic material for improving soil conditions|120.0|FERTILIZERS_SOIL|true|15|5|Bag
+2|Pechay Seeds|Seeds for growing pechay|25.0|SEEDS|true|10|5|Packet
+17|Plant Labels|Labels for identifying plant varieties|30.0|PLANTING_MATERIALS|true|2|5|Pack
+11|Pruning Shears|Tool for trimming small branches and stems|180.0|HAND_TOOLS|true|16|5|Piece
+15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|4|5|Piece
+3|Sweet Corn Seeds|Seeds for growing sweet corn|50.0|SEEDS|true|14|5|Packet
+1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|10|5|Packet
+6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|18|5|Bag
+13|Watering Can|Container used for watering plants|150.0|WATERING|true|17|5|Piece

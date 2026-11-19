@@ -1,16 +1,12 @@
 package ui;
 
-import java.io.InputStream;
-
 import app.AgriSystem;
 import dashboard.ClerkDashboard;
-import dashboard.Dashboard;
 import dashboard.ManagerDashboard;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,14 +14,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Clerk;
@@ -36,7 +28,7 @@ import model.User;
 /*
  * LoginScreen class
  * 	- first screen to pop up
- * 	- "Forgot Password?" opens a pop up listing every current user's username and password
+ * 	- "Forgot Password?" is only a label for now, clicking it does nothing
  * 	- a successful login swaps the scene's root to the Dashboard
  */
 
@@ -50,18 +42,6 @@ public class LoginScreen extends StackPane {
 	private final PasswordField passwordField = new PasswordField();
 	private final Label errorLabel = new Label();
 	
-	private static final String FIELD_STYLE =
-			"-fx-background-color: transparent;" +
-			"-fx-background-radius: 30;" +
-			"-fx-border-color: #A9A9A9;" +
-			"-fx-border-width: 2;" +
-			"-fx-border-radius: 30;" +
-			"-fx-padding: 10 20;" +
-			"-fx-font-size: 16px;" +
-			"-fx-prompt-text-fill: #9A9A9A;" +
-			"-fx-focus-color: transparent;" +
-			"-fx-faint-focus-color: transparent;";
-	
 	// METHODS
 	/*
 	 * LoginScreen(AgriSystem, Stage)
@@ -72,7 +52,6 @@ public class LoginScreen extends StackPane {
 		this.system = system;
 		this.stage = stage;
 		
-		setStyle("-fx-background-color: " + Dashboard.DARKGREEN + ";");
 		setPadding(new Insets(40));
 		getChildren().add(buildCard());
 		
@@ -80,22 +59,17 @@ public class LoginScreen extends StackPane {
 	
 	/*
 	 * buildCard()
-	 * 	- the gray rounded card: logo on the left, form on the right
+	 * 	- the card in the middle of the screen that holds the form
 	 */
 	private HBox buildCard() {
-		
-		StackPane left = new StackPane(Dashboard.createLogo(250));
-		left.setPrefWidth(400);
 		
 		VBox right = buildForm();
 		right.setPrefWidth(340);
 		
-		HBox card = new HBox(20, left, right);
+		HBox card = new HBox(20, right);
 		card.setAlignment(Pos.CENTER);
 		card.setPadding(new Insets(50));
 		card.setMaxSize(860, 460);
-		card.setStyle("-fx-background-color: " + Dashboard.GRAY + ";" + "-fx-background-radius: 20;");
-		card.setEffect(new DropShadow(25, Color.rgb(0, 0, 0, 0.3)));
 		return card;
 		
 	} // end of buildCard
@@ -107,37 +81,22 @@ public class LoginScreen extends StackPane {
 	private VBox buildForm() {
 		
 		Label welcome = new Label("Welcome!");
-		welcome.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: " + Dashboard.DARKGREEN + ";");
-		
 		Label subtitle = new Label("Sign in to your Account");
-		subtitle.setStyle("-fx-font-size: 18px; -fx-text-fill: #4CAF50;");
 		
 		usernameField.setPromptText("Username");
-		usernameField.setStyle(FIELD_STYLE);
 		usernameField.setMaxWidth(320);
 		usernameField.setOnAction(e -> passwordField.requestFocus()); // enter moves to password
 		
 		passwordField.setPromptText("Password");
-		passwordField.setStyle(FIELD_STYLE);
 		passwordField.setMaxWidth(320);
 		passwordField.setOnAction(e -> onLogin()); // enter signs in
 		
-		Label forgot = new Label("Forgot Password?");
-		forgot.setStyle("-fx-font-size: 16px; -fx-text-fill: " + Dashboard.DARKGREEN + "; -fx-cursor: hand;");
+		Label forgot = new Label("Forgot Password?"); 
 		forgot.setOnMouseClicked(e -> showUsersPopup());
 		
 		Button signIn = new Button("SIGN IN");
-		signIn.setStyle(
-				"-fx-background-color: " + Dashboard.ORANGE + ";" +
-				"-fx-text-fill: white;" +
-				"-fx-font-size: 16px;" +
-				"-fx-font-weight: bold;" +
-				"-fx-background-radius: 30;" +
-				"-fx-padding: 10 55;" +
-				"-fx-cursor: hand;");
 		signIn.setOnAction(e -> onLogin());
 		
-		errorLabel.setStyle("-fx-text-fill: #C0392B; -fx-font-size: 13px;");
 		errorLabel.setWrapText(true);
 		
 		VBox form = new VBox(14, welcome, subtitle, usernameField, passwordField, forgot, signIn, errorLabel);
@@ -170,12 +129,11 @@ public class LoginScreen extends StackPane {
 		} // end of if statement
 		
 		// same scene, new root (keeps the window size)
-		
 		if (user.getRole().equals(Role.MANAGER)) {
 			stage.getScene().setRoot(new ManagerDashboard((Manager) user, system.getInventoryService(), system.getUsers()));
 		} else {
 			stage.getScene().setRoot(new ClerkDashboard((Clerk) user, system.getInventoryService()));
-		}
+		} // end of if else statement
 		
 		stage.setTitle("Aura Farm - Dashboard");
 		
@@ -207,7 +165,6 @@ public class LoginScreen extends StackPane {
 		root.setPadding(new Insets(20));
 		root.setAlignment(Pos.CENTER_LEFT);
 		VBox.setVgrow(table, Priority.ALWAYS);
-		root.setStyle("-fx-background-color: " + Dashboard.GRAY + ";");
 		
 		popup.initOwner(stage);
 		popup.initModality(Modality.APPLICATION_MODAL);
