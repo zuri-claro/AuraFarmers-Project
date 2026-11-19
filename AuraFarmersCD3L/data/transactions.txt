@@ -1,3 +1,4 @@
-1|2026-11-19T22:57:29|clerk|Sir Clerk|500.0|false|||1~Tomato Seeds~35.0~2;3~Sweet Corn Seeds~50.0~3;14~Hose Nozzle~90.0~1;13~Watering Can~150.0~1
+1|2026-11-19T22:57:29|clerk|Sir Clerk|500.0|true|clerk|2026-11-20T01:07:29|1~Tomato Seeds~35.0~2;3~Sweet Corn Seeds~50.0~3;14~Hose Nozzle~90.0~1;13~Watering Can~150.0~1
 2|2026-11-19T22:58:45|avagarganta|Ava|1000.0|false|||4~Organic Compost~120.0~2;17~Plant Labels~30.0~16;16~Nursery Pots~10.0~8;7~General-Purpose Insecticide~150.0~1
 3|2026-11-19T22:59:46|avagarganta|Ava|1500.0|false|||1~Tomato Seeds~35.0~4;11~Pruning Shears~180.0~1;12~Hand Cultivator~120.0~1;13~Watering Can~150.0~1;14~Hose Nozzle~90.0~1;15~Seedling Tray~80.0~3;5~Complete Fertilizer~180.0~1
+4|2026-11-20T01:06:39|clerk|Sir Clerk|2000.0|false|||16~Nursery Pots~10.0~4;15~Seedling Tray~80.0~2;14~Hose Nozzle~90.0~1;11~Pruning Shears~180.0~1;8~Garden Fungicide~180.0~2;5~Complete Fertilizer~180.0~3;3~Sweet Corn Seeds~50.0~2;1~Tomato Seeds~35.0~1
