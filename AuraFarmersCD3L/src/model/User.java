@@ -53,6 +53,12 @@ public abstract class User {
 	public abstract boolean canModifyInventory();
 	
 	/*
+	 * canModifyInventory()
+	 * 	- returns false for manager, true for clerk
+	 */
+	public abstract boolean canProcessSale();
+	
+	/*
 	 * toString()
 	 * 	- returns a string containing the user's full name and their role
 	 */

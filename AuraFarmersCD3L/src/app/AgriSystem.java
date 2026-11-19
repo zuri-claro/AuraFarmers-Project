@@ -8,9 +8,11 @@ import model.Manager;
 import model.Product;
 import model.Role;
 import model.User;
+import persistence.TransactionFileManager;
 import persistence.InventoryFileManager;
 import service.InventoryService;
 import service.ProductService;
+import service.TransactionService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public class AgriSystem {
     private List<User> users = new ArrayList<>();
     private final InventoryService inventoryService;
     private final ProductService productService;
+    private final TransactionService transactionService;
     private User currentUser;
 
     // METHODS
@@ -56,6 +59,7 @@ public class AgriSystem {
 
         inventoryService = new InventoryService(inventory, fileManager);
         productService = new ProductService(inventoryService);
+        transactionService = new TransactionService(inventoryService, new TransactionFileManager("data"));
         
         // TEMPORARY FOR TESTINGGG - add users
         User manager = new Manager("manager","manager123","m");
@@ -81,12 +85,14 @@ public class AgriSystem {
      * 	- getUsers()
      * 	- getInventoryService()
      * 	- getCurrentUser()
-     * - getProductService()
+     *  - getProductService()
+     *  - getTransactionService()
      */
     public List<User> getUsers() {return users;}
     public InventoryService getInventoryService() {return inventoryService;}
     public User getCurrentUser() {return currentUser;}
     public ProductService getProductService() {return productService;}
+    public TransactionService getTransactionService() {return transactionService;}
 
     /*
      * login(String, String)
@@ -140,5 +146,19 @@ public class AgriSystem {
         Product product = new Product(id, name, description, price, category, true, unit);
         inventory.addItem(new InventoryItem(product, stock, threshold));
     } // end of add
+    
+    /*
+     * getClerks
+     * 	- used for clerk monitoring by the manager dashboard
+     */
+    public List<Clerk> getClerks() {
+        List<Clerk> clerks = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof Clerk) {
+                clerks.add((Clerk) user);
+            }
+        }
+        return clerks;
+    } // end of getClerks
     
 } // end of AgriSystem class

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -129,5 +132,19 @@ public class Inventory {
         return count;
 
     } // end of getOutOfStockCount
+    
+    /*
+     * getLowStockItems
+     * 	- returns list of items with low stock
+     */
+    public List<InventoryItem> getLowStockItems() {
+        List<InventoryItem> result = new ArrayList<>();
+        for (InventoryItem item : items) {
+            if (item.getProduct().isActive() && item.isLowStock()) {
+                result.add(item);
+            }
+        }
+        return result;
+    } // end of getLowStockItems
 	
 } // end of Inventory class

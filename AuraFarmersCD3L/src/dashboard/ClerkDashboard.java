@@ -18,14 +18,19 @@ import javafx.scene.control.ScrollPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import javafx.scene.control.Alert;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import app.AgriSystem;
 import model.*;
 import service.InventoryService;
+import service.TransactionService;
 
 public class ClerkDashboard extends Dashboard {
 	// attributes
@@ -44,9 +49,6 @@ public class ClerkDashboard extends Dashboard {
     private double totalAmount = 0.0;
     private final Label changeValue = new Label("₱0.00");
     
-    private double salesToday = 0.0;
-    private int transactionCount = 0;
-    
     private final ObservableList<SalesTransaction> transactionHistory = FXCollections.observableArrayList();
     
     //constructor
@@ -59,6 +61,9 @@ public class ClerkDashboard extends Dashboard {
     
     // methods
     private void buildDashboard() {
+        transactionHistory.setAll(transactions().getByClerk(clerk.getUsername()));
+        refreshStats();        
+        
         setTop(createHeader("Clerk Dashboard", "Welcome, " + clerk.getDisplayName()));
 
         //keeping track of current sales, number of transactions, and number of voided transactions
@@ -93,31 +98,22 @@ public class ClerkDashboard extends Dashboard {
         // select a row on the transaction history table. once selected, if void btn is clicked, that transaction becomes void
         voidBtn.setOnAction(event -> {
             SalesTransaction selectedTransaction = historyTable.getSelectionModel().getSelectedItem();
-            
+
             if (selectedTransaction == null) return;
 
-            // removes transaction from history
-            transactionHistory.remove(selectedTransaction);
-            
-            // deducts the selected transaction's sales from the current total sales of the day
-            salesToday -= selectedTransaction.getTotalAmount();
-            salesTodayValue.setText(String.format("₱%.2f", salesToday));
-
-            // decrements the transaction count by 1
-            transactionCount--;
-            transactionsValue.setText(String.valueOf(transactionCount));
-
-            // gets current number of voided transactions and increments it by 1
-            int currentVoided = Integer.parseInt(voidedValue.getText());
-            voidedValue.setText(String.valueOf(currentVoided + 1));
-            
-            // returns the purchased stock back to inventory
-            for (int i = 0; i < selectedTransaction.getItemsPurchased().size(); i++) {
-                InventoryItem item = inventory.findByProductId(selectedTransaction.getItemsPurchased().get(i).getProductId());
-                item.setCurrentStock(item.getCurrentStock() + selectedTransaction.getQuantitiesPurchased().get(i));
+            try {
+                // puts the stock back, logs the movements, and marks the transaction voided
+                transactions().voidTransaction(clerk, selectedTransaction.getTransactionId());
             }
+            catch (RuntimeException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage()).showAndWait();
+                return;
+            }
+
+            transactionHistory.remove(selectedTransaction);
+            refreshStats();
             productCatalog.refresh();
-        });
+        });        
         voidBtn.setPrefWidth(200);
         voidBtn.setStyle(
                 "-fx-background-color: #542020;" +
@@ -345,7 +341,7 @@ public class ClerkDashboard extends Dashboard {
         });
         
         completeBtn.setOnAction(event -> {
-            if (totalAmount <= 0) return;
+            if (itemsToBuy.isEmpty()) return;
 
             double cashReceived;
             try {
@@ -355,39 +351,31 @@ public class ClerkDashboard extends Dashboard {
                 return;
             }
 
-            if (cashReceived < totalAmount) {
-                changeValue.setText("Insufficient Cash");
+            // one entry per product (the same product added twice is merged)
+            Map<Integer, Integer> cart = new LinkedHashMap<>();
+            for (int i = 0; i < itemsToBuy.size(); i++) {
+                cart.merge(itemsToBuy.get(i).getProductId(), amtPerItem.get(i), Integer::sum);
+            }
+
+            SalesTransaction transaction;
+            try {
+                // checks cash and stock, lowers the stock, logs the movements, and saves the sale
+                transaction = transactions().checkout(clerk, cart, cashReceived);
+            }
+            catch (RuntimeException e) {
+                changeValue.setText(e.getMessage());
                 return;
             }
 
-            double change = cashReceived - totalAmount;
-
-            changeValue.setText(String.format("₱%.2f", change));
-
-            SalesTransaction transaction = new SalesTransaction(clerk.getDisplayName(), totalAmount, cashReceived, change,
-            		itemsToBuy, amtPerItem);
+            changeValue.setText(String.format("₱%.2f", transaction.getChangeGiven()));
             transactionHistory.add(transaction);
-            
-            salesToday += totalAmount;
-            salesTodayValue.setText(String.format("₱%.2f", salesToday));
-
-            transactionCount++;
-            transactionsValue.setText(String.valueOf(transactionCount));
+            refreshStats();
 
             purchaseItems.getChildren().clear();
             totalAmount = 0.0;
             totalAmountValue.setText("₱0.00");
             productCatalog.getSelectionModel().clearSelection();
             selectedProductValue.setText("None");
-            changeValue.setText("P0.00");
-            
-            for (int i = 0; i < itemsToBuy.size(); i++) {
-            	InventoryItem item = inventory.findByProductId(itemsToBuy.get(i).getProductId());
-
-                if (item != null) {
-                    item.setCurrentStock(item.getCurrentStock() - amtPerItem.get(i));
-                }
-            }
 
             productCatalog.refresh();
 
@@ -498,6 +486,18 @@ public class ClerkDashboard extends Dashboard {
         table.setItems(transactionHistory);
 
         return table;
+    }
+    
+    // shared transaction service
+    private TransactionService transactions() {
+        return AgriSystem.getInstance().getTransactionService();
+    }
+
+    // refreshes Sales Today / Transactions / Voided from this clerk's saved transactions
+    private void refreshStats() {
+        salesTodayValue.setText(String.format("₱%.2f", transactions().totalSales(clerk.getUsername(), DateRange.TODAY)));
+        transactionsValue.setText(String.valueOf(transactions().countTransactions(clerk.getUsername(), false, DateRange.TODAY)));
+        voidedValue.setText(String.valueOf(transactions().countTransactions(clerk.getUsername(), true, DateRange.TODAY)));
     }
   
 } // end of ClerkDashboard class

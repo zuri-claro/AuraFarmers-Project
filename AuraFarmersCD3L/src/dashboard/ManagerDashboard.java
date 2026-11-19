@@ -1,5 +1,6 @@
 package dashboard;
 
+import model.DateRange;
 import model.Manager;
 import model.Clerk;
 import model.User;
@@ -9,6 +10,7 @@ import model.Product;
 import model.StockMovement;
 
 import service.InventoryService;
+import service.TransactionService;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -428,9 +430,21 @@ public class ManagerDashboard extends Dashboard {
             )
         );
 
+        TableColumn<Clerk, Integer> salesMadeColumn =
+                new TableColumn<>("Sales Made");
+
+        salesMadeColumn.setCellValueFactory(cell ->
+            new javafx.beans.property.SimpleIntegerProperty(
+                AgriSystem.getInstance().getTransactionService()
+                    .countTransactions(cell.getValue().getUsername(),
+                        false, DateRange.ANY_TIME)
+            ).asObject()
+        );
+
         table.getColumns().addAll(
             nameColumn,
-            usernameColumn
+            usernameColumn,
+            salesMadeColumn
         );
 
         table.setItems(clerks);
@@ -458,6 +472,12 @@ public class ManagerDashboard extends Dashboard {
         outOfStockValue.setText(
             String.valueOf(inventory.getOutOfStockCount())
         );
+        
+        TransactionService transactions = AgriSystem.getInstance().getTransactionService();
+
+        totalSalesValue.setText(String.format("₱%.2f", transactions.totalSales(null, DateRange.ANY_TIME)));
+        completedTransactionsValue.setText(String.valueOf(
+            transactions.countTransactions(null, false, DateRange.ANY_TIME)));
 
     } // end of updateStatistics
 

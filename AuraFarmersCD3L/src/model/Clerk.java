@@ -23,5 +23,11 @@ public class Clerk extends User{
 	 */
     @Override
     public boolean canModifyInventory() {return false;}
+    
+	/*
+	 * canModifyInventory()
+	 * 	- returns true because class is clerk
+	 */
+	public boolean canProcessSale() {return true;}
 	
 } // end of Clerk class
