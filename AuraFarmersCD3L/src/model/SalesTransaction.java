@@ -84,16 +84,36 @@ public class SalesTransaction {
 
 	public LocalDate getTransactionDate() {return timestamp.toLocalDate();}
 	public LocalTime getTransactionTime() {return timestamp.toLocalTime();}
+	
+	public String getTimestampText() {return timestamp.format(DateFormats.DATE_TIME);}                 // 11/14/26 21:04
+	public String getTimestampSecondsText() {return timestamp.format(DateFormats.DATE_TIME_SECONDS);}  // 11/14/26 21:04:00
 
+	/*
+	 * isVoided()
+	 * 	- returns if transaction is voided
+	 */
 	public boolean isVoided() {return voided;}
 	
 	/*
+	 * getTotalQuantity()
+	 * 	- returns total number of items bought in the transaction
+	 */
+	public int getTotalQuantity() {
+		int total = 0;
+		for (PurchasedProduct item : itemsPurchased) {
+			total += item.getQuantity();
+		}
+		return total;
+	} // end of getTotalQuantity
+	
+	/*
 	 * markVoided(String, LocalDateTime)
+	 * 	- marks transaction as voided
 	 */
 	public void markVoided(String byUsername, LocalDateTime when) {
 		this.voided = true;
 		this.voidedBy = byUsername;
 		this.voidedAt = when.withNano(0);
-	}
+	} // end of markVoided
 	
 } // end of SalesTransaction class
