@@ -7,6 +7,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.ImageView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +53,7 @@ public class LoginScreen extends StackPane {
 		this.system = system;
 		this.stage = stage;
 		
+		getStyleClass().add("login-root"); // green background
 		setPadding(new Insets(40));
 		getChildren().add(buildCard());
 		
@@ -66,10 +68,19 @@ public class LoginScreen extends StackPane {
 		VBox right = buildForm();
 		right.setPrefWidth(340);
 		
-		HBox card = new HBox(20, right);
+		HBox card = new HBox(40);
+		card.getStyleClass().add("content-card");
 		card.setAlignment(Pos.CENTER);
 		card.setPadding(new Insets(50));
 		card.setMaxSize(860, 460);
+		
+		// the Aura logo on the left, like in the Figma design (skipped if the image file is missing)
+		ImageView logo = Theme.logo(180);
+		if (logo != null) {
+			card.getChildren().add(logo);
+		} // end of if statement
+		
+		card.getChildren().add(right);
 		return card;
 		
 	} // end of buildCard
@@ -98,6 +109,11 @@ public class LoginScreen extends StackPane {
 		signIn.setOnAction(e -> onLogin());
 		
 		errorLabel.setWrapText(true);
+		
+		welcome.getStyleClass().add("login-welcome");
+		subtitle.getStyleClass().add("login-subtitle");
+		forgot.getStyleClass().add("login-link");
+		errorLabel.getStyleClass().add("form-error");
 		
 		VBox form = new VBox(14, welcome, subtitle, usernameField, passwordField, forgot, signIn, errorLabel);
 		form.setAlignment(Pos.CENTER);
@@ -169,7 +185,9 @@ public class LoginScreen extends StackPane {
 		popup.initOwner(stage);
 		popup.initModality(Modality.APPLICATION_MODAL);
 		popup.setTitle("Current Users");
-		popup.setScene(new Scene(root, 420, 380));
+		Scene popupScene = new Scene(root, 420, 380);
+		Theme.apply(popupScene);
+		popup.setScene(popupScene);
 		popup.showAndWait();
 		
 	} // end of showUsersPopup
