@@ -129,6 +129,7 @@ public class TransactionService {
 		// ERROR
 		if (transaction.isVoided()) {
 			System.out.println("Transaction " + transactionId + " is already voided.");
+			return;
 		}
 		
 		// get total sum of quantities of items from voided transaction

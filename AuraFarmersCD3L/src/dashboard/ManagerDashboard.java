@@ -13,6 +13,7 @@ import service.InventoryService;
 import service.TransactionService;
 import ui.InventoryScreen;
 import ui.ProductManagementScreen;
+import ui.Theme;
 import ui.TransactionScreen;
 
 import javafx.beans.property.SimpleIntegerProperty;
@@ -161,21 +162,32 @@ public class ManagerDashboard extends Dashboard {
     private void showDashboardHome() {
     	
     	Label welcome = new Label("Welcome, " + manager.getDisplayName() + "!");
+    	welcome.getStyleClass().add("welcome-title");
     	
     	Label tabsTitle = new Label("TABS");
+    	tabsTitle.getStyleClass().add("tabs-title");
+    	
+    	// the side tabs look like the Figma menu; the content area sits on a grey card
+    	Theme.addStyle(overviewTab, "tab-button");
+    	Theme.addStyle(clerkTab, "tab-button");
+    	Theme.addStyle(lowStockTab, "tab-button");
+    	Theme.addStyle(tabContent, "content-card");
+    	tabContent.setPadding(new Insets(10));
+    	
     	overviewTab.setMaxWidth(Double.MAX_VALUE);
     	clerkTab.setMaxWidth(Double.MAX_VALUE);
     	lowStockTab.setMaxWidth(Double.MAX_VALUE);
     	
     	VBox tabs = new VBox(10, tabsTitle, overviewTab, clerkTab, lowStockTab);
-    	tabs.setPrefWidth(160);
+    	tabs.setPrefWidth(190);
     	tabs.setAlignment(Pos.TOP_CENTER);
     	
     	HBox body = new HBox(15, tabs, tabContent);
     	HBox.setHgrow(tabContent, Priority.ALWAYS);
     	
     	VBox home = new VBox(10, welcome, body);
-    	home.setPadding(new Insets(10));
+    	home.setPadding(new Insets(10, 24, 24, 24));
+    	home.getStyleClass().add("no-card"); // this page builds its own card, so showScreen must not add another
     	VBox.setVgrow(body, Priority.ALWAYS);
     	
     	showScreen(dashboardButton, home);
@@ -205,14 +217,14 @@ public class ManagerDashboard extends Dashboard {
     	updateStatistics();
     	
     	VBox inventoryOverview = new VBox(5,
-    			new Label("Inventory Overview"),
+    			Theme.sectionTitle("Inventory Overview"),
     			createStatColumn(
     					createStatCard("Active Products", activeProductsValue),
     					createStatCard("Low Stock Products", lowStockValue),
     					createStatCard("Out of Stock Products", outOfStockValue)));
     	
     	VBox salesOverview = new VBox(5,
-    			new Label("Sales Overview"),
+    			Theme.sectionTitle("Sales Overview"),
     			createStatColumn(
     					createStatCard("Total Sales", totalSalesValue),
     					createStatCard("Completed Transactions", completedTransactionsValue),
@@ -223,9 +235,9 @@ public class ManagerDashboard extends Dashboard {
     	VBox content = new VBox(15,
     			asOfLabel,
     			overviews,
-    			new Label("Current Inventory"),
+    			Theme.sectionTitle("Current Inventory"),
     			createInventoryTable(),
-    			new Label("Recent Stock Movements"),
+    			Theme.sectionTitle("Recent Stock Movements"),
     			createMovementTable());
     	content.setPadding(new Insets(10));
     	
@@ -277,11 +289,11 @@ public class ManagerDashboard extends Dashboard {
     	
     	Region space = new Region();
     	HBox.setHgrow(space, Priority.ALWAYS);
-    	HBox clerkHeader = new HBox(10, new Label("All Clerks"), space, openButton);
+    	HBox clerkHeader = new HBox(10, Theme.sectionTitle("All Clerks"), space, openButton);
     	clerkHeader.setAlignment(Pos.CENTER_LEFT);
     	
     	VBox content = new VBox(15,
-    			new Label("Clerk Sales History"),
+    			Theme.sectionTitle("Clerk Sales History"),
     			historyTable,
     			clerkHeader,
     			clerkTable);
@@ -336,7 +348,7 @@ public class ManagerDashboard extends Dashboard {
     	
     	Region space = new Region();
     	HBox.setHgrow(space, Priority.ALWAYS);
-    	HBox header = new HBox(10, new Label("Low-Stock Products"), space, restockButton);
+    	HBox header = new HBox(10, Theme.sectionTitle("Low-Stock Products"), space, restockButton);
     	header.setAlignment(Pos.CENTER_LEFT);
     	
     	VBox content = new VBox(15, header, table);
@@ -354,6 +366,7 @@ public class ManagerDashboard extends Dashboard {
     private TableView<InventoryItem> createInventoryTable() {
 
         TableView<InventoryItem> table = new TableView<>();
+    	table.setRowFactory(Theme.stockRowFactory());
 
         TableColumn<InventoryItem, String> nameColumn =
                 new TableColumn<>("Product Name");
@@ -594,6 +607,7 @@ public class ManagerDashboard extends Dashboard {
     private TableView<InventoryItem> createLowStockTable() {
     	
     	TableView<InventoryItem> table = new TableView<>();
+    	table.setRowFactory(Theme.stockRowFactory());
     	
     	TableColumn<InventoryItem, String> nameColumn = new TableColumn<>("Product Name");
     	nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getProduct().getName()));
@@ -708,7 +722,10 @@ public class ManagerDashboard extends Dashboard {
     	popup.initOwner(getScene().getWindow());
     	popup.initModality(Modality.APPLICATION_MODAL);
     	popup.setTitle("Clerk Dashboard - " + clerk.getDisplayName());
-    	popup.setScene(new Scene(root, 520, 560));
+    	root.getStyleClass().add("form-dialog");
+    	Scene popupScene = new Scene(root, 520, 560);
+    	Theme.apply(popupScene);
+    	popup.setScene(popupScene);
     	popup.showAndWait();
     	
     } // end of openClerkDashboard

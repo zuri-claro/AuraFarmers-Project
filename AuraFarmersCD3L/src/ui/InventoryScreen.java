@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -23,7 +22,6 @@ import model.InventoryItem;
 import model.User;
 import service.InventoryService;
 
-import java.util.Optional;
 
 /*
  * InventoryScreen
@@ -136,6 +134,7 @@ public class InventoryScreen extends BorderPane {
         SortedList<InventoryItem> sortedItems = new SortedList<>(filteredItems);
         sortedItems.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedItems);
+        table.setRowFactory(Theme.stockRowFactory()); // red = out of stock, amber = low stock
         
     } // end of setupTable
     
@@ -195,24 +194,7 @@ public class InventoryScreen extends BorderPane {
         if (item == null) {
             return;
         } // end of if statement
-        String quantityText = ask("Restock Item", item.getProduct().getName(), "Quantity received:", "");
-        if (quantityText == null) {
-            return;
-        }
-        String note = ask("Restock Item", item.getProduct().getName(), "Note (optional):", "");
-        if (note == null) {
-            return;
-        } // end of if statement
-
-        try {
-            int quantity = Integer.parseInt(quantityText.trim());
-            String error = service.restock(user, item.getProduct().getProductId(), quantity, note);
-            if (error != null) {
-                showError(error);
-            }
-        } catch (NumberFormatException e) {
-            showError("Please enter a whole number.");
-        } // end of try catch
+        StockDialogs.showRestock(service, user, item);
         refresh();
     } // end of onRestock
     
@@ -224,25 +206,7 @@ public class InventoryScreen extends BorderPane {
         if (item == null) {
             return;
         } // end of if statement
-        String header = item.getProduct().getName() + " (current: " + item.getCurrentStock() + ")";
-        String quantityText = ask("Stock Adjustment", header, "New stock quantity:", "");
-        if (quantityText == null) {
-            return;
-        } // end of if statement
-        String reason = ask("Stock Adjustment", header, "Reason (required):", "");
-        if (reason == null) {
-            return;
-        } // end of if statement
-
-        try {
-            int newQuantity = Integer.parseInt(quantityText.trim());
-            String error = service.adjust(user, item.getProduct().getProductId(), newQuantity, reason);
-            if (error != null) {
-                showError(error);
-            }
-        } catch (NumberFormatException e) {
-            showError("Please enter a whole number.");
-        } // end of try catch
+        StockDialogs.showAdjust(service, user, item);
         refresh();
     } // end of onAdjust
     
@@ -254,21 +218,7 @@ public class InventoryScreen extends BorderPane {
         if (item == null) {
             return;
         } // end of if statement
-        String text = ask("Low-Stock Threshold", item.getProduct().getName(),
-                "New threshold:", String.valueOf(item.getLowStockThreshold()));
-        if (text == null) {
-            return;
-        } // end of if statement
-
-        try {
-            int threshold = Integer.parseInt(text.trim());
-            String error = service.setThreshold(user, item.getProduct().getProductId(), threshold);
-            if (error != null) {
-                showError(error);
-            }
-        } catch (NumberFormatException e) {
-            showError("Please enter a whole number.");
-        } // end of try catch
+        StockDialogs.showThreshold(service, user, item);
         refresh();
     } // end of onThreshold
 
@@ -284,21 +234,6 @@ public class InventoryScreen extends BorderPane {
         return item;
     } // end of getSelectedItem()
     
-    /*
-     * ask(String, String, String, String)
-     * 	- gets user input
-     */
-    private String ask(String title, String header, String label, String defaultValue) {
-        TextInputDialog dialog = new TextInputDialog(defaultValue);
-        dialog.setTitle(title);
-        dialog.setHeaderText(header);
-        dialog.setContentText(label);
-        Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            return result.get();
-        } // end of if statement
-        return null;
-    } // end of ask
     
     /*
      * showError(String)

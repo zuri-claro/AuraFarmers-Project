@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ui.LoginScreen;
+import ui.Theme;
 
 public class Main extends Application{
 	
@@ -12,8 +13,11 @@ public class Main extends Application{
 		
 	    AgriSystem system = AgriSystem.getInstance();
 
+	    Scene scene = new Scene(new LoginScreen(system, stage), 1100, 700);
+	    Theme.apply(scene); // the Aura Farm look (aura.css), used by every screen in this window
+
 	    stage.setTitle("Aura Farm");
-	    stage.setScene(new Scene(new LoginScreen(system, stage), 1100, 700));
+	    stage.setScene(scene);
 	    stage.setMinWidth(1000);
 	    stage.setMinHeight(650);
 	    stage.show();
