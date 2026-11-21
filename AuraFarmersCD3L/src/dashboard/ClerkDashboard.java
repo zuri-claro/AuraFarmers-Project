@@ -36,6 +36,7 @@ import service.ProductService;
 import service.TransactionService;
 import ui.InventoryScreen;
 import ui.NewSaleScreen;
+import ui.Theme;
 import ui.TransactionScreen;
 
 public class ClerkDashboard extends Dashboard {
@@ -109,6 +110,7 @@ public class ClerkDashboard extends Dashboard {
         refreshStats();        
         
         Label welcome = new Label("Welcome, " + clerk.getDisplayName() + "!");
+        welcome.getStyleClass().add("welcome-title");
         
         // + New Sale opens the cart screen
         Button newSaleBtn = new Button("+ New Sale");
@@ -116,7 +118,7 @@ public class ClerkDashboard extends Dashboard {
 
         // keeping track of today's sales, number of transactions, and number of voided transactions
         VBox summary = new VBox(5,
-        		new Label("SUMMARY"),
+        		Theme.sectionTitle("SUMMARY"),
         		createStatColumn(
         				createStatCard("Today's Sales", salesTodayValue),
         				createStatCard("Transactions Today", transactionsValue),
@@ -124,7 +126,7 @@ public class ClerkDashboard extends Dashboard {
 
         // creates a table for viewing this clerk's most recent transactions
         TableView<SalesTransaction> historyTable = createTransactionTable();
-        VBox recent = new VBox(5, new Label("RECENT TRANSACTIONS"), historyTable);
+        VBox recent = new VBox(5, Theme.sectionTitle("RECENT TRANSACTIONS"), historyTable);
         
         HBox topRow = new HBox(30, summary, recent);
         
@@ -133,20 +135,17 @@ public class ClerkDashboard extends Dashboard {
         refreshCatalog();
         HBox filters = new HBox(10, searchField, categoryBox, statusBox);
         
-        VBox mainContent = new VBox(
-        		15,
-        		welcome,
-        		newSaleBtn,
-        		asOfLabel,
-                topRow,
-                new Label("PRODUCT CATALOG"),
-                filters,
-                productCatalog
-        );
+        // everything below the welcome text sits on one grey card, like in the Figma design
+        VBox card = new VBox(15, asOfLabel, topRow, Theme.sectionTitle("PRODUCT CATALOG"), filters, productCatalog);
+        card.getStyleClass().add("content-card");
+        card.setPadding(new Insets(16));
         
-        mainContent.setPadding(new Insets(10));
+        VBox mainContent = new VBox(15, welcome, newSaleBtn, card);
+        mainContent.setPadding(new Insets(10, 24, 24, 24));
+        
         ScrollPane scrollPane = new ScrollPane(mainContent);
         scrollPane.setFitToWidth(true);
+        scrollPane.getStyleClass().add("no-card"); // this page builds its own card, so showScreen must not add another
         showScreen(dashboardButton, scrollPane);
     }
     
@@ -154,6 +153,7 @@ public class ClerkDashboard extends Dashboard {
     private TableView<InventoryItem> createProductCatalog() {
 
         TableView<InventoryItem> table = new TableView<>();
+        table.setRowFactory(Theme.stockRowFactory());
         
         TableColumn<InventoryItem, String> idColumn =
             new TableColumn<>("Product ID");
