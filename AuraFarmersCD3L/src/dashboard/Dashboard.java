@@ -23,6 +23,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ui.LoginScreen;
+import ui.Theme;
 
 /*
  * Dashboard class
@@ -35,8 +36,8 @@ public class Dashboard extends BorderPane {
 	
 	// COLORS
 	public static final String DARKGREEN = "#2E8B57";
-	public static final String GREEN = "66BB6A";
-	public static final String LIGHTGREEN = "C8E6C9";
+	public static final String GREEN = "#66BB6A";
+	public static final String LIGHTGREEN = "#C8E6C9";
 	public static final String ORANGE = "#FF8A65";
 	public static final String PEACH = "#FFCCBC";
 	
@@ -48,6 +49,11 @@ public class Dashboard extends BorderPane {
 	
 	// ATTRIBUTES
 	private final List<Button> navButtons = new ArrayList<>(); // buttons on top, used to show which screen is open
+	
+	// runs for every dashboard: gives it the green background from aura.css
+	{
+		getStyleClass().add("dashboard");
+	}
     
 	/*
 	 * createHeader(String, String)
@@ -56,7 +62,9 @@ public class Dashboard extends BorderPane {
     protected VBox createHeader(String title, String subtitle) {
 
         Label titleLabel = new Label(title);
+        titleLabel.getStyleClass().add("welcome-title");
         Label subtitleLabel = new Label(subtitle);
+        subtitleLabel.getStyleClass().add("welcome-subtitle");
 
         VBox header = new VBox(5, titleLabel, subtitleLabel);
         header.setPadding(new Insets(10));
@@ -79,8 +87,8 @@ public class Dashboard extends BorderPane {
         line.setAlignment(Pos.CENTER_LEFT);
 
         VBox card = new VBox(line);
-        card.setPadding(new Insets(5));
-        card.setPrefWidth(220);
+        card.getStyleClass().add("stat-card");
+        card.setPrefWidth(260);
         return card;
         
     } // end of createStatCard
@@ -115,13 +123,21 @@ public class Dashboard extends BorderPane {
      */
     protected List<Button> createNavBar(String... names) {
     	
-    	HBox bar = new HBox(10);
-    	bar.setPadding(new Insets(10));
+    	HBox bar = new HBox(12);
+    	bar.getStyleClass().add("nav-bar");
+    	bar.setPadding(new Insets(10, 24, 10, 24));
     	bar.setAlignment(Pos.CENTER_LEFT);
+    	
+    	// the Aura logo on the left (skipped if the image file is missing)
+    	ImageView logo = Theme.logo(46);
+    	if (logo != null) {
+    		bar.getChildren().add(logo);
+    	} // end of if statement
     	
     	navButtons.clear();
     	for (String name : names) {
     		Button button = new Button(name);
+    		button.getStyleClass().add("nav-button");
     		navButtons.add(button);
     		bar.getChildren().add(button);
     	} // end of for loop
@@ -131,9 +147,17 @@ public class Dashboard extends BorderPane {
     	HBox.setHgrow(space, Priority.ALWAYS);
     	
     	Button logoutButton = new Button("Log Out");
+    	logoutButton.getStyleClass().addAll("nav-button", "nav-logout");
     	logoutButton.setOnAction(e -> logout());
     	
     	bar.getChildren().addAll(space, logoutButton);
+    	
+    	// the profile picture on the far right (skipped if the image file is missing)
+    	ImageView avatar = Theme.avatar(46);
+    	if (avatar != null) {
+    		bar.getChildren().add(avatar);
+    	} // end of if statement
+    	
     	setTop(bar);
     	
     	return new ArrayList<>(navButtons);
@@ -150,7 +174,19 @@ public class Dashboard extends BorderPane {
     	for (Button button : navButtons) {
     		button.setDisable(button == selected);
     	} // end of for loop
-    	setCenter(screen);
+    	
+    	// most screens sit on a grey card like in the Figma design;
+    	// a screen that builds its own cards (e.g. the dashboards' home pages) adds the style class "no-card" to skip this
+    	Node content = screen;
+    	if (!screen.getStyleClass().contains("no-card")) {
+    		VBox card = new VBox(screen);
+    		VBox.setVgrow(screen, Priority.ALWAYS);
+    		card.getStyleClass().add("content-card");
+    		content = card;
+    	} // end of if statement
+    	
+    	BorderPane.setMargin(content, new Insets(0, 24, 24, 24));
+    	setCenter(content);
     	
     } // end of showScreen
     
@@ -184,6 +220,7 @@ public class Dashboard extends BorderPane {
     	Alert alert = new Alert(Alert.AlertType.ERROR);
     	alert.setHeaderText(null);
     	alert.setContentText(message);
+    	Theme.apply(alert.getDialogPane());
     	alert.showAndWait();
     	
     } // end of showError
@@ -197,6 +234,7 @@ public class Dashboard extends BorderPane {
     	Alert alert = new Alert(Alert.AlertType.INFORMATION);
     	alert.setHeaderText(null);
     	alert.setContentText(message);
+    	Theme.apply(alert.getDialogPane());
     	alert.showAndWait();
     	
     } // end of showInfo
@@ -210,6 +248,7 @@ public class Dashboard extends BorderPane {
     	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     	alert.setHeaderText(null);
     	alert.setContentText(message);
+    	Theme.apply(alert.getDialogPane());
     	Optional<ButtonType> result = alert.showAndWait();
     	return result.isPresent() && result.get() == ButtonType.OK;
     	
@@ -226,6 +265,7 @@ public class Dashboard extends BorderPane {
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.setContentText(label);
+        Theme.apply(dialog.getDialogPane());
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()) {
             return result.get();
