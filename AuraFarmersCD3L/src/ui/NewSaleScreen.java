@@ -104,6 +104,7 @@ public class NewSaleScreen extends BorderPane {
 		HBox filters = new HBox(10, searchField, categoryBox);
 		
 		VBox left = new VBox(10, filters, table, messageLabel);
+		left.getStyleClass().add("white-card");
 		left.setPadding(new Insets(10));
 		VBox.setVgrow(table, Priority.ALWAYS);
 		return left;
@@ -118,6 +119,7 @@ public class NewSaleScreen extends BorderPane {
 		
 		Label cartTitle = new Label("Cart");
 		
+		cartTitle.getStyleClass().add("cart-title");
 		ScrollPane cartScroll = new ScrollPane(cartItems);
 		cartScroll.setFitToWidth(true);
 		cartScroll.setPrefHeight(300);
@@ -137,6 +139,7 @@ public class NewSaleScreen extends BorderPane {
 		totals.addRow(3, new Label("Change:"), changeValue);
 		
 		VBox right = new VBox(10, cartTitle, cartScroll, totals, completeButton);
+		right.getStyleClass().add("white-card");
 		right.setPadding(new Insets(10));
 		right.setPrefWidth(340);
 		VBox.setVgrow(cartScroll, Priority.ALWAYS);
@@ -193,6 +196,8 @@ public class NewSaleScreen extends BorderPane {
 		
 		Button minusButton = new Button("-");
 		Button plusButton = new Button("+");
+		minusButton.getStyleClass().add("stepper-button");
+		plusButton.getStyleClass().add("stepper-button");
 		Label quantityLabel = new Label(String.valueOf(getCartQuantity(item)));
 		
 		minusButton.setOnAction(e -> changeQuantity(item, -1));
@@ -278,6 +283,7 @@ public class NewSaleScreen extends BorderPane {
 			Label lineTotalLabel = new Label(Dashboard.formatPeso(price * quantity));
 			
 			Button removeButton = new Button("Remove");
+			removeButton.getStyleClass().add("danger-button");
 			removeButton.setOnAction(e -> {
 				cart.remove(item.getProductId());
 				table.refresh();
