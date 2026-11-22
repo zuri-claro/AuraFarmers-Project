@@ -29,7 +29,6 @@ import model.User;
 /*
  * LoginScreen class
  * 	- first screen to pop up
- * 	- "Forgot Password?" is only a label for now, clicking it does nothing
  * 	- a successful login swaps the scene's root to the Dashboard
  */
 

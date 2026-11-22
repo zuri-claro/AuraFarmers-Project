@@ -16,8 +16,8 @@ import service.ProductService;
 
 /*
  * ProductFormDialog class
- * 	- the Add Product and Edit Product pop-ups from the Figma design
- * 	- showAdd(...) opens an empty form (with starting stock), showEdit(...) opens the form filled with a product
+ * 	- the Add Product and Edit Product pop-ups
+ * 	- showAdd() opens an empty form (with starting stock), showEdit() opens the form filled with a product
  * 	- when editing, the stock is shown but locked (stock is changed in the Inventory screen)
  * 	- the form only collects the input; ProductService and InventoryService do the real checking and saving
  * 	- utility class, so nobody should create a ProductFormDialog object

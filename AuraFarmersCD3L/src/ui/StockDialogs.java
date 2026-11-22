@@ -9,8 +9,7 @@ import service.InventoryService;
  * StockDialogs class
  * 	- the Restock, Stock Adjustment, and Set Low-Stock Threshold pop-ups of the Inventory screen
  * 	- they use the same look as the Add/Edit Product dialogs (FormDialog)
- * 	- InventoryService does the real checking; if it returns an error message, the message is shown
- * 		inside the dialog and the dialog stays open
+ * 	- InventoryService does the real checking; if it returns an error message, the message is shown inside the dialog and the dialog stays open
  * 	- each method returns true if the change was saved, false if the user cancelled
  * 	- utility class, so nobody should create a StockDialogs object
  */

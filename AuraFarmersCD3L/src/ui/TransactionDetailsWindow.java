@@ -22,10 +22,9 @@ import model.SalesTransaction;
 
 /*
  * TransactionDetailsWindow class
- * 	- extends Stage (its own pop up window), styled like the "View Details" dialog in the Figma design
+ * 	- extends Stage (its own pop up window), styled like the "View Details" dialog
  * 	- opened by "View Details" in the Transactions screen
- * 	- top card: transaction id, date and time, processed by, quantities, total cost, cash received, change, status
- * 		(for a voided transaction it also shows who voided it and when)
+ * 	- top card: transaction id, date and time, processed by, quantities, total cost, cash received, change, status (for a voided transaction it also shows who voided it and when)
  * 	- bottom card: table of the products bought
  */
 public class TransactionDetailsWindow extends Stage {
