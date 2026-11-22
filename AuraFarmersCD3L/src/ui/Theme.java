@@ -18,9 +18,8 @@ import model.InventoryItem;
 
 /*
  * Theme class
- * 	- one place for the look of the app (taken from the Figma design)
- * 	- the colors, fonts, and button styles are all written in resources/aura.css,
- * 		this class only attaches that stylesheet to windows and has a few small helpers
+ * 	- one place for the look of the app
+ * 	- the colors, fonts, and button styles are all written in resources/aura.css, this class only attaches that stylesheet to windows and has a few small helpers
  * 	- utility class, so nobody should create a Theme object
  */
 

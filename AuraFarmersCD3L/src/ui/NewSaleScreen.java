@@ -36,8 +36,7 @@ import service.TransactionService;
  * 	- extends BorderPane
  * 	- opened by the "+ New Sale" button of the Clerk Dashboard
  * 	- left part: search bar, category dropdown, and the active products with - quantity + buttons
- * 	- right part: the cart (each product with - quantity + and Remove), quantities, total,
- * 		cash received, change, and the Complete button
+ * 	- right part: the cart (each product with - quantity + and Remove), quantities, total, cash received, change, and the Complete button
  * 	- nothing is sold until Complete is clicked (TransactionService.checkout)
  */
 public class NewSaleScreen extends BorderPane {

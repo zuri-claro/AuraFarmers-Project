@@ -17,8 +17,7 @@ import javafx.stage.Stage;
 
 /*
  * FormDialog class
- * 	- reusable pop-up form that looks like the dialogs in the Figma design
- * 		(grey background, white card, green title, rounded inputs, Cancel + Save buttons)
+ * 	- reusable pop-up form
  * 	- used by Add Product, Edit Product, Restock, Stock Adjustment, and Set Low-Stock Threshold
  * 	- if saving fails, the error message is shown INSIDE the dialog and the dialog stays open,
  * 		so the user does not lose what they typed
@@ -72,6 +71,7 @@ public class FormDialog {
 		root.getStyleClass().add("form-dialog");
 		root.setPadding(new Insets(18));
 		root.setPrefWidth(620);
+		root.setPrefHeight(300);
 		
 		Scene scene = new Scene(root);
 		Theme.apply(scene);
