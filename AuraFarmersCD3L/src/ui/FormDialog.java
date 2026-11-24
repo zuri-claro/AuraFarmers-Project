@@ -74,6 +74,7 @@ public class FormDialog {
 		root.getStyleClass().add("form-dialog");
 		root.setPadding(new Insets(18));
 		root.setPrefWidth(620);
+		root.setPrefHeight(300);
 		
 		Scene scene = new Scene(root);
 		Theme.apply(scene);

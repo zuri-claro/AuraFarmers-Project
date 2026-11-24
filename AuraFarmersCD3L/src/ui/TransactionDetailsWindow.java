@@ -139,6 +139,8 @@ public class TransactionDetailsWindow extends Stage {
 		table.getColumns().add(totalColumn);
 		VBox.setVgrow(table, Priority.ALWAYS);
 		
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+		
 		return table;
 		
 	} // end of createItemTable

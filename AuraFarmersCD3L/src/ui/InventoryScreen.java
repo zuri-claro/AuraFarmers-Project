@@ -57,6 +57,7 @@ public class InventoryScreen extends BorderPane {
         setupTable();
         setTop(createTopPart());
         setCenter(table);
+        setPadding(new Insets(10));
         setBottom(createBottomPart());
         refresh();
         
@@ -136,6 +137,9 @@ public class InventoryScreen extends BorderPane {
         table.setItems(sortedItems);
         table.setRowFactory(Theme.stockRowFactory()); // red = out of stock, amber = low stock
         table.setPlaceholder(new javafx.scene.control.Label("No products match your search."));
+        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        
     } // end of setupTable
     
     /*

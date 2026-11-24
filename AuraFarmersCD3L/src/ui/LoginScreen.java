@@ -102,7 +102,6 @@ public class LoginScreen extends StackPane {
 		passwordField.setOnAction(e -> onLogin()); // enter signs in
 		
 		Label forgot = new Label("Forgot Password?"); 
-		forgot.setOnMouseClicked(e -> showUsersPopup());
 		
 		Button signIn = new Button("SIGN IN");
 		signIn.setOnAction(e -> onLogin());
@@ -153,42 +152,5 @@ public class LoginScreen extends StackPane {
 		stage.setTitle("Aura Farm - Dashboard");
 		
 	} // end of onLogin
-	
-	/*
-	 * showUsersPopup()
-	 * 	- only meant for presentation
-	 * 	- pop up with a table of every current user's username and password
-	 */
-	private void showUsersPopup() {
-		
-		TableView<User> table = new TableView<>(FXCollections.observableArrayList(system.getUsers()));
-		
-		TableColumn<User, String> usernameCol = new TableColumn<>("Username");
-		usernameCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getUsername()));
-		usernameCol.prefWidthProperty().bind(table.widthProperty().multiply(0.48));
-		
-		TableColumn<User, String> passwordCol = new TableColumn<>("Password");
-		passwordCol.setCellValueFactory(c -> new ReadOnlyStringWrapper(c.getValue().getPassword()));
-		passwordCol.prefWidthProperty().bind(table.widthProperty().multiply(0.48));
-		
-		table.getColumns().add(usernameCol);
-		table.getColumns().add(passwordCol);
-		
-		Stage popup = new Stage();
-		
-		VBox root = new VBox(12, table);
-		root.setPadding(new Insets(20));
-		root.setAlignment(Pos.CENTER_LEFT);
-		VBox.setVgrow(table, Priority.ALWAYS);
-		
-		popup.initOwner(stage);
-		popup.initModality(Modality.APPLICATION_MODAL);
-		popup.setTitle("Current Users");
-		Scene popupScene = new Scene(root, 420, 380);
-		Theme.apply(popupScene);
-		popup.setScene(popupScene);
-		popup.showAndWait();
-		
-	} // end of showUsersPopup
 	
 } // end of LoginScreen class

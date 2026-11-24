@@ -1,17 +1,30 @@
-5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|13|5|Bag
-8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|15|5|Pack
-9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|18|5|Bottle
-7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|19|5|Pack
-12|Hand Cultivator|Tool for loosening soil and removing weeds|120.0|HAND_TOOLS|true|18|5|Piece
-10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|33|5|Piece
-14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|12|5|Piece
-16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|0|5|Piece
-4|Organic Compost|Organic material for improving soil conditions|120.0|FERTILIZERS_SOIL|true|15|5|Bag
-2|Pechay Seeds|Seeds for growing pechay|25.0|SEEDS|true|10|5|Packet
-17|Plant Labels|Labels for identifying plant varieties|30.0|PLANTING_MATERIALS|true|2|5|Pack
-11|Pruning Shears|Tool for trimming small branches and stems|180.0|HAND_TOOLS|true|17|5|Piece
-15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|7|5|Piece
-3|Sweet Corn Seeds|Seeds for growing sweet corn|50.0|SEEDS|true|14|5|Packet
-1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|14|5|Packet
-6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|18|5|Bag
-13|Watering Can|Container used for watering plants|150.0|WATERING|true|18|5|Piece
+30|Coco Coir Bricks|Compressed coconut fiber for seed starting and potting|75.0|PLANTING_MATERIALS|true|33|5|Piece
+5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|46|5|Bag
+19|Eggplant Seeds|Seeds for growing eggplant|35.0|SEEDS|true|35|5|Packet
+8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|16|5|Pack
+9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|16|5|Bottle
+27|Garden Hose|Flexible hose for watering plants|350.0|WATERING|true|9|5|Piece
+26|Garden Rake|Tool for leveling soil and clearing debris|220.0|HAND_TOOLS|true|0|5|Piece
+21|Garden Soil Mix|Ready-to-use potting mix for containers and beds|90.0|FERTILIZERS_SOIL|true|39|5|Bag
+25|Garden Spade|Tool for digging and turning soil|250.0|HAND_TOOLS|true|3|5|Piece
+7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|20|5|Pack
+12|Hand Cultivator|Tool for loosening soil and removing weeds|120.0|HAND_TOOLS|true|4|5|Piece
+10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|24|5|Piece
+14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|21|5|Piece
+23|Neem Oil Spray|Natural spray for controlling soft-bodied insects|170.0|PESTICIDES|true|12|5|Bottle
+16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|106|5|Piece
+18|Okra Seeds|Seeds for growing okra|30.0|SEEDS|true|34|5|Packet
+4|Organic Compost|Organic material for improving soil conditions|120.0|FERTILIZERS_SOIL|true|54|5|Bag
+2|Pechay Seeds|Seeds for growing pechay|25.0|SEEDS|true|53|5|Packet
+17|Plant Labels|Labels for identifying plant varieties|30.0|PLANTING_MATERIALS|true|0|5|Pack
+11|Pruning Shears|Tool for trimming small branches and stems|180.0|HAND_TOOLS|true|15|5|Piece
+15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|45|5|Piece
+24|Snail Bait|Pellets for controlling snails and slugs|110.0|PESTICIDES|false|9|5|Pack
+29|Spray Bottle|Handheld bottle for misting plants|60.0|WATERING|true|18|5|Piece
+28|Sprinkler Head|Attachment for spreading water over a wide area|130.0|WATERING|true|6|5|Piece
+20|String Bean Seeds|Seeds for growing string beans (sitaw)|40.0|SEEDS|true|8|5|Packet
+3|Sweet Corn Seeds|Seeds for growing sweet corn|50.0|SEEDS|true|37|5|Packet
+1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|58|5|Packet
+22|Urea Fertilizer|Nitrogen fertilizer for leafy growth|220.0|FERTILIZERS_SOIL|true|16|5|Bag
+6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|34|5|Bag
+13|Watering Can|Container used for watering plants|150.0|WATERING|true|17|5|Piece

@@ -66,7 +66,5 @@ public abstract class User {
     public String toString() {
         return this.displayName + " (" + role + ")";
     } // end of toString
-    
-	public String getPassword() {return password;} // only used for project presentation, the actual application does not need this
-	
+    	
 } // end of User class

@@ -1,68 +1,91 @@
-1|5|25|manager|found 5 tomato seeds on the side of the road|2026-11-19T22:55:56
-10|19|39|manager|had to borrow a hand trowel|2026-11-19T22:56:17
-1|-2|23|clerk|Sale 1|2026-11-19T22:57:29
-3|-3|17|clerk|Sale 1|2026-11-19T22:57:29
-14|-1|19|clerk|Sale 1|2026-11-19T22:57:29
-13|-1|19|clerk|Sale 1|2026-11-19T22:57:29
-4|-2|18|avagarganta|Sale 2|2026-11-19T22:58:45
-17|-16|4|avagarganta|Sale 2|2026-11-19T22:58:45
-16|-8|12|avagarganta|Sale 2|2026-11-19T22:58:45
-7|-1|19|avagarganta|Sale 2|2026-11-19T22:58:45
-1|-4|19|avagarganta|Sale 3|2026-11-19T22:59:46
-11|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46
-12|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46
-13|-1|18|avagarganta|Sale 3|2026-11-19T22:59:46
-14|-1|18|avagarganta|Sale 3|2026-11-19T22:59:46
-15|-3|17|avagarganta|Sale 3|2026-11-19T22:59:46
-5|-1|19|avagarganta|Sale 3|2026-11-19T22:59:46
-16|-4|8|clerk|Sale 4|2026-11-20T01:06:39
-15|-2|15|clerk|Sale 4|2026-11-20T01:06:39
-14|-1|17|clerk|Sale 4|2026-11-20T01:06:39
-11|-1|18|clerk|Sale 4|2026-11-20T01:06:39
-8|-2|18|clerk|Sale 4|2026-11-20T01:06:39
-5|-3|16|clerk|Sale 4|2026-11-20T01:06:39
-3|-2|15|clerk|Sale 4|2026-11-20T01:06:39
-1|-1|18|clerk|Sale 4|2026-11-20T01:06:39
-1|2|20|clerk|Void 1|2026-11-20T01:07:29
-3|3|18|clerk|Void 1|2026-11-20T01:07:29
-14|1|18|clerk|Void 1|2026-11-20T01:07:29
-13|1|19|clerk|Void 1|2026-11-20T01:07:29
-1|-4|16|james_nmj|Sale 5|2026-11-20T01:29:50
-2|-4|16|james_nmj|Sale 5|2026-11-20T01:29:50
-3|-4|14|james_nmj|Sale 5|2026-11-20T01:29:50
-16|-8|0|james_nmj|Sale 5|2026-11-20T01:29:50
-17|-2|2|james_nmj|Sale 6|2026-11-20T01:30:29
-15|-1|14|james_nmj|Sale 6|2026-11-20T01:30:29
-14|-1|17|james_nmj|Sale 6|2026-11-20T01:30:29
-13|-2|17|james_nmj|Sale 6|2026-11-20T01:30:29
-12|-1|18|james_nmj|Sale 6|2026-11-20T01:30:29
-10|-2|37|james_nmj|Sale 6|2026-11-20T01:30:29
-9|-1|19|james_nmj|Sale 6|2026-11-20T01:30:29
-8|-1|17|james_nmj|Sale 6|2026-11-20T01:30:29
-6|-1|19|james_nmj|Sale 6|2026-11-20T01:30:29
-1|-4|12|avagarganta|Sale 7|2026-11-20T01:31:50
-2|-2|14|avagarganta|Sale 7|2026-11-20T01:31:50
-3|-3|11|avagarganta|Sale 7|2026-11-20T01:31:50
-4|-3|15|avagarganta|Sale 7|2026-11-20T01:31:50
-8|-2|15|avagarganta|Sale 7|2026-11-20T01:31:50
-12|-1|17|avagarganta|Sale 7|2026-11-20T01:31:50
-15|-10|4|avagarganta|Sale 7|2026-11-20T01:31:50
-14|-3|14|avagarganta|Sale 7|2026-11-20T01:31:50
-1|-2|10|allen_kalbo|Sale 8|2026-11-20T01:33:41
-2|-4|10|allen_kalbo|Sale 8|2026-11-20T01:33:41
-3|-7|4|allen_kalbo|Sale 8|2026-11-20T01:33:41
-5|-2|14|allen_kalbo|Sale 8|2026-11-20T01:33:41
-6|-1|18|allen_kalbo|Sale 8|2026-11-20T01:33:41
-9|-1|18|allen_kalbo|Sale 8|2026-11-20T01:33:41
-11|-2|16|allen_kalbo|Sale 8|2026-11-20T01:33:41
-10|-4|33|allen_kalbo|Sale 8|2026-11-20T01:33:41
-14|-3|11|allen_kalbo|Sale 8|2026-11-20T01:33:41
-3|10|14|zurielclaro|zuri donated 10 sweet corn seeds W zuri|2026-11-20T01:36:59
-1|4|14|manager|Void 3|2026-11-20T01:52:17
-11|1|17|manager|Void 3|2026-11-20T01:52:17
-12|1|18|manager|Void 3|2026-11-20T01:52:17
-13|1|18|manager|Void 3|2026-11-20T01:52:17
-14|1|12|manager|Void 3|2026-11-20T01:52:17
-15|3|7|manager|Void 3|2026-11-20T01:52:17
-5|1|15|manager|Void 3|2026-11-20T01:52:17
-5|-2|13|clerk|Sale 10|2026-11-24T23:08:13
+20|-1|23|caleb_xia|Sale 1|2026-11-09T11:42:13
+8|-2|18|caleb_xia|Sale 1|2026-11-09T11:42:13
+15|-1|29|caleb_xia|Sale 1|2026-11-09T11:42:13
+18|-3|27|clerk|Sale 2|2026-11-09T14:38:34
+1|-3|37|clerk|Sale 2|2026-11-09T14:38:34
+3|-2|33|clerk|Sale 2|2026-11-09T14:38:34
+21|-1|25|clerk|Sale 2|2026-11-09T14:38:34
+17|-2|2|clerk|Sale 2|2026-11-09T14:38:34
+6|-2|24|sylus_qin|Sale 3|2026-11-10T08:08:49
+16|-1|59|sylus_qin|Sale 3|2026-11-10T08:08:49
+29|-1|23|sylus_qin|Sale 3|2026-11-10T08:08:49
+16|40|99|manager|Restock from supplier delivery|2026-11-10T08:42:11
+15|20|49|manager|Restock from supplier delivery|2026-11-10T08:43:05
+15|-1|48|sylus_qin|Sale 4|2026-11-10T15:02:46
+18|-2|25|sylus_qin|Sale 4|2026-11-10T15:02:46
+1|-4|33|sylus_qin|Sale 4|2026-11-10T15:02:46
+1|-1|32|clerk|Sale 5|2026-11-11T14:15:47
+23|-2|12|clerk|Sale 5|2026-11-11T14:15:47
+15|-3|45|clerk|Sale 5|2026-11-11T14:15:47
+8|-1|17|sylus_qin|Sale 6|2026-11-11T16:10:40
+2|-2|43|sylus_qin|Sale 6|2026-11-11T16:10:40
+12|-2|5|sylus_qin|Sale 6|2026-11-11T16:10:40
+1|25|57|manager|Restock - Greenfield Seeds delivery|2026-11-12T09:15:30
+2|20|63|manager|Restock - Greenfield Seeds delivery|2026-11-12T09:16:02
+3|15|48|manager|Restock - Greenfield Seeds delivery|2026-11-12T09:16:40
+21|-1|24|allen_kalbo|Sale 7|2026-11-12T11:50:44
+12|-1|4|allen_kalbo|Sale 7|2026-11-12T11:50:44
+4|-1|29|clerk|Sale 8|2026-11-12T14:45:54
+3|-3|45|clerk|Sale 8|2026-11-12T14:45:54
+1|1|58|james_nmj|Void 5|2026-11-12T16:15:47
+23|2|14|james_nmj|Void 5|2026-11-12T16:15:47
+15|3|48|james_nmj|Void 5|2026-11-12T16:15:47
+27|-1|9|rafayel_qi|Sale 9|2026-11-13T08:42:54
+11|-1|15|manager|Damaged item removed (bent blade)|2026-11-13T10:05:19
+2|-5|58|rafayel_qi|Sale 10|2026-11-13T11:09:08
+29|-1|22|rafayel_qi|Sale 10|2026-11-13T11:09:08
+20|-3|20|rafayel_qi|Sale 10|2026-11-13T11:09:08
+19|-1|27|caleb_xia|Sale 11|2026-11-14T11:38:30
+9|-2|16|clerk|Sale 12|2026-11-16T08:01:47
+21|-2|22|clerk|Sale 12|2026-11-16T08:01:47
+4|30|59|james_nmj|Restock from supplier delivery|2026-11-16T08:50:44
+21|20|42|james_nmj|Restock from supplier delivery|2026-11-16T08:51:20
+21|-2|40|sylus_qin|Sale 13|2026-11-16T14:23:15
+19|-2|25|sylus_qin|Sale 13|2026-11-16T14:23:15
+17|-2|0|manager|Inventory count correction|2026-11-17T09:30:08
+3|-3|42|caleb_xia|Sale 14|2026-11-17T12:54:34
+5|-1|27|caleb_xia|Sale 14|2026-11-17T12:54:34
+16|-9|90|caleb_xia|Sale 14|2026-11-17T12:54:34
+20|-3|17|caleb_xia|Sale 14|2026-11-17T12:54:34
+2|-1|57|rafayel_qi|Sale 15|2026-11-17T16:07:32
+20|-3|14|rafayel_qi|Sale 15|2026-11-17T16:07:32
+3|-1|41|rafayel_qi|Sale 15|2026-11-17T16:07:32
+29|-1|21|caleb_xia|Sale 16|2026-11-18T08:41:00
+2|-1|56|caleb_xia|Sale 16|2026-11-18T08:41:00
+19|-3|22|caleb_xia|Sale 16|2026-11-18T08:41:00
+6|-2|22|caleb_xia|Sale 16|2026-11-18T08:41:00
+5|20|47|manager|Restock from supplier delivery|2026-11-18T08:47:03
+16|30|120|manager|Restock from supplier delivery|2026-11-18T08:48:10
+29|1|22|clerk|Void 16|2026-11-18T13:41:00
+2|1|57|clerk|Void 16|2026-11-18T13:41:00
+19|3|25|clerk|Void 16|2026-11-18T13:41:00
+6|2|24|clerk|Void 16|2026-11-18T13:41:00
+4|-2|57|rafayel_qi|Sale 17|2026-11-18T15:38:42
+20|-3|11|rafayel_qi|Sale 17|2026-11-18T15:38:42
+21|-1|39|rafayel_qi|Sale 17|2026-11-18T15:38:42
+7|-2|20|rafayel_qi|Sale 17|2026-11-18T15:38:42
+14|-1|21|manager|Damaged item removed (cracked nozzle)|2026-11-19T13:22:57
+4|-2|55|allen_kalbo|Sale 18|2026-11-19T16:20:52
+30|-2|18|allen_kalbo|Sale 18|2026-11-19T16:20:52
+29|-2|20|allen_kalbo|Sale 18|2026-11-19T16:20:52
+2|-4|53|allen_kalbo|Sale 18|2026-11-19T16:20:52
+30|15|33|manager|New stock - coco coir shipment|2026-11-20T09:05:41
+3|-1|40|sylus_qin|Sale 19|2026-11-20T13:54:42
+5|-1|46|sylus_qin|Sale 19|2026-11-20T13:54:42
+16|-4|116|sylus_qin|Sale 19|2026-11-20T13:54:42
+10|-1|24|sylus_qin|Sale 20|2026-11-20T14:27:54
+3|-3|37|sylus_qin|Sale 20|2026-11-20T14:27:54
+4|-1|54|caleb_xia|Sale 21|2026-11-21T11:03:56
+29|-1|19|caleb_xia|Sale 21|2026-11-21T11:03:56
+18|12|37|james_nmj|Restock - Greenfield Seeds delivery|2026-11-23T08:55:12
+19|10|35|james_nmj|Restock - Greenfield Seeds delivery|2026-11-23T08:56:03
+13|-1|19|clerk|Sale 22|2026-11-23T12:12:39
+29|-1|18|clerk|Sale 22|2026-11-23T12:12:39
+15|-3|45|clerk|Sale 22|2026-11-23T12:12:39
+16|-10|106|caleb_xia|Sale 23|2026-11-23T14:55:27
+18|-3|34|caleb_xia|Sale 23|2026-11-23T14:55:27
+23|-2|12|sylus_qin|Sale 24|2026-11-24T09:04:08
+6|10|34|manager|Restock from supplier delivery|2026-11-24T09:10:25
+13|-2|17|rafayel_qi|Sale 25|2026-11-24T16:09:03
+8|-1|16|rafayel_qi|Sale 25|2026-11-24T16:09:03
+20|-3|8|rafayel_qi|Sale 25|2026-11-24T16:09:03

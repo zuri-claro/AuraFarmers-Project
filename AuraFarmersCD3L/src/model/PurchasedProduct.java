@@ -1,7 +1,7 @@
 package model;
 
 /*
- * PurchasedItem class
+ * PurchasedProduct class
  * 	- to be used for transactions
  * 	- keeps track of the product the customer bought, its price and quantity
  */
@@ -15,7 +15,7 @@ public class PurchasedProduct {
 	
 	// METHODS
 	/*
-	 * PurchasedItem(int, String, double, int)
+	 * PurchasedProduct(int, String, double, int)
 	 * 	- constructor method
 	 */
 	public PurchasedProduct(int productId, String productName, double unitPrice, int quantity) {
@@ -45,4 +45,4 @@ public class PurchasedProduct {
 		return Math.round(unitPrice * quantity * 100.0) / 100.0;
 	} // end of getLineTotal
 	
-} // end of PurchasedItem class
+} // end of PurchasedProduct class

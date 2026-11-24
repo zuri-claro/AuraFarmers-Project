@@ -52,7 +52,7 @@ public class ClerkDashboard extends Dashboard {
     
     // product catalog and its filters
     private ProductGrid productCatalog; // the product catalog shown as photo cards
-    private static final int RECENT_COUNT = 10; // how many rows the Recent Transactions table shows
+    private static final int RECENT_COUNT = 3; // how many rows the Recent Transactions table shows
     
     private final ObservableList<SalesTransaction> transactionHistory = FXCollections.observableArrayList();
     
@@ -173,10 +173,10 @@ public class ClerkDashboard extends Dashboard {
         
         TableView<SalesTransaction> table = new TableView<>();
         
-        idColumn.setPrefWidth(110);
-        timeColumn.setPrefWidth(80);
-        totalColumn.setPrefWidth(100);
-        statusColumn.setPrefWidth(80);
+        idColumn.setPrefWidth(120);
+        timeColumn.setPrefWidth(90);
+        totalColumn.setPrefWidth(110);
+        statusColumn.setPrefWidth(90);
         
         table.getColumns().add(idColumn);
         table.getColumns().add(timeColumn);
@@ -184,7 +184,8 @@ public class ClerkDashboard extends Dashboard {
         table.getColumns().add(statusColumn);
 
         table.setItems(transactionHistory);
-        table.setPrefHeight(180);
+        table.setPrefHeight(170);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         return table;
     }
