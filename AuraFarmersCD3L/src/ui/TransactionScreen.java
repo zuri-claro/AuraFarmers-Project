@@ -59,6 +59,7 @@ public class TransactionScreen extends BorderPane {
 		setupTable();
 		setTop(createTopPart());
 		setCenter(table);
+		setPadding(new Insets(10));
 		setBottom(createBottomPart());
 		refresh();
 		
@@ -127,7 +128,9 @@ public class TransactionScreen extends BorderPane {
 		table.getColumns().add(makeColumn("Change", 100, t -> Dashboard.formatPeso(t.getChangeGiven())));
 		table.getColumns().add(makeColumn("Status", 80, t -> t.isVoided() ? "VOIDED" : "VALID"));
 		table.setPlaceholder(new javafx.scene.control.Label("No transactions found."));
-		
+				
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+
 	} // end of setupTable
 	
 	/*

@@ -191,7 +191,8 @@ public class NewSaleScreen extends BorderPane {
         table.getColumns().add(stockColumn);
         table.getColumns().add(quantityColumn);
         table.setPlaceholder(new javafx.scene.control.Label("No products available."));
-        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+
     } // end of setupTable
     
     /*

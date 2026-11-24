@@ -387,15 +387,6 @@ public class ManagerDashboard extends Dashboard {
             )
         );
 
-        TableColumn<InventoryItem, String> priceColumn =
-                new TableColumn<>("Price");
-
-        priceColumn.setCellValueFactory(cell ->
-            new SimpleStringProperty(
-                formatPeso(cell.getValue().getProduct().getPrice())
-            )
-        );
-
         TableColumn<InventoryItem, Integer> stockColumn =
                 new TableColumn<>("Current Stock");
 
@@ -414,26 +405,16 @@ public class ManagerDashboard extends Dashboard {
             ).asObject()
         );
 
-        TableColumn<InventoryItem, String> statusColumn =
-                new TableColumn<>("Status");
-
-        // getStatus() returns Inactive, Out of Stock, Low Stock, or Available
-        statusColumn.setCellValueFactory(cell ->
-            new SimpleStringProperty(
-                cell.getValue().getStatus()
-            )
-        );
-
         table.getColumns().add(nameColumn);
         table.getColumns().add(categoryColumn);
-        table.getColumns().add(priceColumn);
         table.getColumns().add(stockColumn);
         table.getColumns().add(thresholdColumn);
-        table.getColumns().add(statusColumn);
 
         // Uses the same inventory data as InventoryService
         table.setItems(inventory.getItems());
         table.setPrefHeight(250);
+        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         return table;
 
@@ -460,13 +441,14 @@ public class ManagerDashboard extends Dashboard {
         });
 
         TableColumn<StockMovement, Integer> quantityColumn =
-                new TableColumn<>("Quantity Change");
+                new TableColumn<>("Quantity");
 
         quantityColumn.setCellValueFactory(cell ->
             new SimpleIntegerProperty(
                 cell.getValue().getQuantity()
             ).asObject()
         );
+        quantityColumn.setPrefWidth(50);
 
         TableColumn<StockMovement, Integer> stockColumn =
                 new TableColumn<>("New Stock");
@@ -476,6 +458,7 @@ public class ManagerDashboard extends Dashboard {
                 cell.getValue().getStockAfter()
             ).asObject()
         );
+        stockColumn.setPrefWidth(60);
 
         TableColumn<StockMovement, String> clerkColumn =
                 new TableColumn<>("Performed By");
@@ -511,7 +494,9 @@ public class ManagerDashboard extends Dashboard {
         table.setItems(FXCollections.observableArrayList(
         		inventoryService.getRecentMovements(inventoryService.getMovements().size())));
 
-        table.setPrefHeight(200);
+        table.setPrefHeight(300);
+        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         return table;
 
@@ -560,7 +545,9 @@ public class ManagerDashboard extends Dashboard {
         table.getColumns().add(salesMadeColumn);
 
         table.setItems(clerks);
-        table.setPrefHeight(180);
+        table.setPrefHeight(300);
+        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         return table;
 
@@ -595,7 +582,9 @@ public class ManagerDashboard extends Dashboard {
     	table.getColumns().add(clerkColumn);
     	table.getColumns().add(quantityColumn);
     	table.getColumns().add(totalColumn);
-    	table.setPrefHeight(180);
+    	table.setPrefHeight(300);
+    	
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     	
     	return table;
     	
@@ -626,6 +615,8 @@ public class ManagerDashboard extends Dashboard {
     	table.getColumns().add(stockColumn);
     	table.getColumns().add(thresholdColumn);
     	table.setItems(FXCollections.observableArrayList(inventory.getLowStockItems()));
+    	
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     	
     	return table;
     	

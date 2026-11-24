@@ -107,6 +107,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 24, 0, 8, 8);
 }
 .stat-card {
+    -fx-background-color: white;
     -fx-border-color: #6a6a6a;
     -fx-border-width: 1;
     -fx-padding: 8 14 8 14;
@@ -169,13 +170,22 @@
 
 /* ---------- tables ---------- */
 .table-view {
-    -fx-background-color: transparent;
+    -fx-background-color: #ffffff;
     -fx-control-inner-background: #d9d9d9;
     -fx-control-inner-background-alt: #d9d9d9;
-    -fx-table-cell-border-color: transparent;
+    /*-fx-table-cell-border-color: transparent;*/
+    -fx-padding: 0;
+    -fx-border-color: #2e8a57;
+	-fx-border-width: 1.5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #e8f0ea;
+    -fx-border-color: transparent transparent #2e8a57 transparent;
+    -fx-border-width: 0 0 1.5px 0;
     -fx-padding: 0;
 }
-.table-view .column-header-background { -fx-background-color: transparent; -fx-padding: 0; }
+
 .table-view .column-header,
 .table-view .filler {
     -fx-background-color: transparent;
@@ -189,7 +199,7 @@
 }
 .table-view .table-row-cell {
     -fx-background-color: transparent;
-    -fx-table-cell-border-color: transparent;
+    /*-fx-table-cell-border-color: transparent;*/
     -fx-cell-size: 40;
 }
 .table-view .table-cell {
