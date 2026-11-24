@@ -3,8 +3,8 @@ CLERK|clerk|Sir Clerk|clerk123
 MANAGER|yukiclemente|Yuki|password
 MANAGER|zurielclaro|Zuri|password
 MANAGER|abigaillicanda|Abby|password
-CLERK|avagarganta|Ava|password
-CLERK|james_nmj|James|password
+MANAGER|james_nmj|James|password
 CLERK|allen_kalbo|Allen|password
-CLERK|mariasantos|Maria|password
-CLERK|juandelacruz|Juan|password
+CLERK|rafayel_qi|Rafayel|password
+CLERK|caleb_xia|Caleb|password
+CLERK|sylus_qin|Sylus|password
