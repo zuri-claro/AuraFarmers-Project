@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -683,6 +684,11 @@ public class ManagerDashboard extends Dashboard {
     			createStatCard("Voided Today", voidedToday),
     			createStatCard("Total Items Sold", itemsSold));
     	
+    	// let the summary cards stretch to the full width of the pop-up, like in the Figma design
+    	for (Node card : summary.getChildren()) {
+    		((Region) card).setMaxWidth(Double.MAX_VALUE);
+    	}
+    	
     	// every transaction of the clerk (valid and voided), newest first
     	List<SalesTransaction> clerkTransactions = new ArrayList<>();
     	for (SalesTransaction t : transactions.getAll()) {
@@ -702,29 +708,55 @@ public class ManagerDashboard extends Dashboard {
     	TableColumn<SalesTransaction, String> statusColumn = new TableColumn<>("Status");
     	statusColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().isVoided() ? "VOIDED" : "VALID"));
     	
+    	// VOIDED is shown in red, like in the Figma design
+    	statusColumn.setCellFactory(column -> new TableCell<SalesTransaction, String>() {
+    		@Override
+    		protected void updateItem(String status, boolean empty) {
+    			super.updateItem(status, empty);
+    			setText(empty ? null : status);
+    			setStyle(!empty && "VOIDED".equals(status) ? "-fx-text-fill: #c62828; -fx-font-weight: bold;" : "");
+    		}
+    	});
+    	
     	table.getColumns().add(idColumn);
     	table.getColumns().add(dateColumn);
     	table.getColumns().add(totalColumn);
     	table.getColumns().add(statusColumn);
+    	table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    	table.setPlaceholder(new Label("No transactions yet."));
+    	
+    	// the table sits on a white card
+    	VBox tableCard = new VBox(table);
+    	tableCard.getStyleClass().add("white-card");
+    	tableCard.setPadding(new Insets(12));
+    	VBox.setVgrow(table, Priority.ALWAYS);
+    	
+    	Label title = new Label(clerk.getDisplayName());
+    	title.getStyleClass().add("form-title");
+    	Label subtitle = new Label(username + "  -  viewing as Manager");
+    	subtitle.getStyleClass().add("muted-text");
     	
     	Stage popup = new Stage();
     	Button closeButton = new Button("Close");
     	closeButton.setOnAction(e -> popup.close());
+    	HBox buttons = new HBox(closeButton);
+    	buttons.setAlignment(Pos.CENTER);
     	
-    	VBox root = new VBox(15,
-    			new Label(clerk.getDisplayName() + " (" + username + ")"),
-    			new Label("SUMMARY"), summary,
-    			new Label("TRANSACTIONS"), table,
-    			closeButton);
-    	root.setPadding(new Insets(20));
-    	VBox.setVgrow(table, Priority.ALWAYS);
+    	VBox root = new VBox(12,
+    			title, subtitle,
+    			Theme.sectionTitle("SUMMARY"), summary,
+    			Theme.sectionTitle("TRANSACTIONS"), tableCard,
+    			buttons);
+    	root.getStyleClass().add("form-dialog");
+    	root.setPadding(new Insets(24));
+    	VBox.setVgrow(tableCard, Priority.ALWAYS);
+    	
+    	Scene popupScene = new Scene(root, 640, 760);
+    	Theme.apply(popupScene);
     	
     	popup.initOwner(getScene().getWindow());
     	popup.initModality(Modality.APPLICATION_MODAL);
     	popup.setTitle("Clerk Dashboard - " + clerk.getDisplayName());
-    	root.getStyleClass().add("form-dialog");
-    	Scene popupScene = new Scene(root, 520, 560);
-    	Theme.apply(popupScene);
     	popup.setScene(popupScene);
     	popup.showAndWait();
     	

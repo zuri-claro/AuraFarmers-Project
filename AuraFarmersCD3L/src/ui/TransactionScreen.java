@@ -126,6 +126,7 @@ public class TransactionScreen extends BorderPane {
 		table.getColumns().add(makeColumn("Cash Received", 110, t -> Dashboard.formatPeso(t.getCashReceived())));
 		table.getColumns().add(makeColumn("Change", 100, t -> Dashboard.formatPeso(t.getChangeGiven())));
 		table.getColumns().add(makeColumn("Status", 80, t -> t.isVoided() ? "VOIDED" : "VALID"));
+		table.setPlaceholder(new javafx.scene.control.Label("No transactions found."));
 		
 	} // end of setupTable
 	
@@ -213,7 +214,7 @@ public class TransactionScreen extends BorderPane {
 			return;
 		} // end of if statement
 		
-		if (!Dashboard.confirm("Void " + transaction.getDisplayId() + "? The stock will be put back.")) {
+		if (!ConfirmDialog.confirmVoid(transaction.getDisplayId())) {
 			return;
 		} // end of if statement
 		

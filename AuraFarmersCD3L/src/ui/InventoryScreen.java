@@ -135,7 +135,7 @@ public class InventoryScreen extends BorderPane {
         sortedItems.comparatorProperty().bind(table.comparatorProperty());
         table.setItems(sortedItems);
         table.setRowFactory(Theme.stockRowFactory()); // red = out of stock, amber = low stock
-        
+        table.setPlaceholder(new javafx.scene.control.Label("No products match your search."));
     } // end of setupTable
     
     /*

@@ -17,7 +17,8 @@ import javafx.stage.Stage;
 
 /*
  * FormDialog class
- * 	- reusable pop-up form
+ * 	- reusable pop-up form that looks like the dialogs in the Figma design
+ * 		(grey background, white card, green title, rounded inputs, Cancel + Save buttons)
  * 	- used by Add Product, Edit Product, Restock, Stock Adjustment, and Set Low-Stock Threshold
  * 	- if saving fails, the error message is shown INSIDE the dialog and the dialog stays open,
  * 		so the user does not lose what they typed
@@ -29,6 +30,7 @@ public class FormDialog {
 	private final Stage stage = new Stage();
 	private final VBox fields = new VBox(12);
 	private final Label errorLabel = new Label();
+	private final Button saveButton; // the orange button on the right
 	private boolean saved = false;
 	private Supplier<String> onSave;
 	
@@ -51,12 +53,13 @@ public class FormDialog {
 		errorLabel.setVisible(false);
 		errorLabel.setManaged(false);
 		
+		
 		Button cancelButton = new Button("Cancel");
 		cancelButton.getStyleClass().add("secondary-button");
 		cancelButton.setCancelButton(true); // Esc closes the dialog
 		cancelButton.setOnAction(e -> stage.close());
 		
-		Button saveButton = new Button(saveText);
+		saveButton = new Button(saveText);
 		saveButton.setDefaultButton(true); // Enter saves
 		saveButton.setOnAction(e -> save());
 		
@@ -71,7 +74,6 @@ public class FormDialog {
 		root.getStyleClass().add("form-dialog");
 		root.setPadding(new Insets(18));
 		root.setPrefWidth(620);
-		root.setPrefHeight(300);
 		
 		Scene scene = new Scene(root);
 		Theme.apply(scene);
@@ -123,6 +125,31 @@ public class FormDialog {
 		return this;
 		
 	} // end of addNote
+	
+	/*
+	 * addMessage(String)
+	 * 	- adds a normal line of text (used by the Yes/No confirmation pop-ups, see ConfirmDialog)
+	 */
+	public FormDialog addMessage(String text) {
+		
+		Label message = new Label(text);
+		message.getStyleClass().add("form-message");
+		message.setWrapText(true);
+		fields.getChildren().add(message);
+		return this;
+		
+	} // end of addMessage
+	
+	/*
+	 * markDestructive()
+	 * 	- turns the main button red, for actions that cannot be undone (e.g. Void, Deactivate)
+	 */
+	public FormDialog markDestructive() {
+		
+		saveButton.getStyleClass().add("destructive-button");
+		return this;
+		
+	} // end of markDestructive
 	
 	/*
 	 * labeled(String, Node, String)
