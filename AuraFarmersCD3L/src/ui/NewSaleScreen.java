@@ -391,7 +391,7 @@ public class NewSaleScreen extends BorderPane {
         
         SalesTransaction transaction;
         try {
-            transaction = transactionService.checkout(user, new LinkedHashMap<>(cart), cash);
+            transaction = transactionService.checkout(user, new LinkedHashMap<>(cart), cash, customerName);
         } catch (RuntimeException e) { // e.g. not enough stock, inactive product
             Dashboard.showError(e.getMessage());
             return;
