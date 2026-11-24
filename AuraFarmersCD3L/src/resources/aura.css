@@ -230,7 +230,7 @@
 .login-root     { -fx-background-color: #2e8a57; }
 .login-welcome  { -fx-text-fill: #2e8a57; -fx-font-size: 40px; -fx-font-weight: bold; }
 .login-subtitle { -fx-text-fill: #66bb6a; -fx-font-size: 18px; }
-.login-link     { -fx-text-fill: #2e8a57; -fx-cursor: hand; -fx-underline: true; }
+.login-link     { -fx-text-fill: #2e8a57; }
 .form-error     { -fx-text-fill: #c62828; -fx-font-weight: bold; }
 
 /* ---------- pop-up forms (Add Product, Restock, ...) ---------- */
