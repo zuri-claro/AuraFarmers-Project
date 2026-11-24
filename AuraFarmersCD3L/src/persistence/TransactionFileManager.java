@@ -68,6 +68,7 @@ public class TransactionFileManager {
 				// write the transaction details first, then the line of items
 				writer.println(t.getTransactionId() + SEPARATOR
 						+ t.getTimestamp() + SEPARATOR
+						+ clean(t.getCustomerName()) + SEPARATOR
 						+ clean(t.getClerkUsername()) + SEPARATOR
 						+ clean(t.getClerkName()) + SEPARATOR
 						+ t.getCashReceived() + SEPARATOR
@@ -107,7 +108,7 @@ public class TransactionFileManager {
 				String[] parts = line.split("\\|", -1);
 				
 				// ERROR: some line was saved wrong
-				if (parts.length != 9) {
+				if (parts.length != 10) {
 					System.out.println("Skipped line in transactions file: " + line);
 					continue;
 				}
@@ -116,19 +117,19 @@ public class TransactionFileManager {
 					
 					// items purchased
 					List<PurchasedProduct> items = new ArrayList<>();
-					for (String text : parts[8].split(";")) {
+					for (String text : parts[9].split(";")) {
 						if (text.trim().isEmpty()) {continue;}
 						String[] f = text.split("~", -1);
 						items.add(new PurchasedProduct(Integer.parseInt(f[0]), f[1], Double.parseDouble(f[2]), Integer.parseInt(f[3])));
 					}
 					
 					// void details
-					LocalDateTime voidedAt = parts[7].trim().isEmpty() ? null : LocalDateTime.parse(parts[7].trim());
-					String voidedBy = parts[6].isEmpty() ? null : parts[6];
+					String voidedBy = parts[7].isEmpty() ? null : parts[7];
+					LocalDateTime voidedAt = parts[8].trim().isEmpty() ? null : LocalDateTime.parse(parts[8].trim());
 					
 					// add all to transactions
-					transactions.add(new SalesTransaction(Integer.parseInt(parts[0]), LocalDateTime.parse(parts[1]), parts[2], parts[3],
-							items, Double.parseDouble(parts[4]), Boolean.parseBoolean(parts[5]), voidedBy, voidedAt));
+					transactions.add(new SalesTransaction(parts[2], Integer.parseInt(parts[0]), LocalDateTime.parse(parts[1]), parts[3], parts[4],
+							items, Double.parseDouble(parts[5]), Boolean.parseBoolean(parts[6]), voidedBy, voidedAt));
 					
 				} catch (RuntimeException e) {
 					System.out.println("Skipped a bad line in transactions file: " + line);
