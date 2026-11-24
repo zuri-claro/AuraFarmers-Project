@@ -1,4 +1,4 @@
-5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|15|5|Bag
+5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|13|5|Bag
 8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|15|5|Pack
 9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|18|5|Bottle
 7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|19|5|Pack

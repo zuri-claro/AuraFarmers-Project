@@ -42,7 +42,7 @@ public class TransactionService {
 	 *  - if anything is wrong, nothing is sold and no stock changes.
 	 * 	- returns the saved transaction (with id, total, and change)
 	 */
-	public SalesTransaction checkout(User user, Map<Integer, Integer> cart, double cashReceived) {
+	public SalesTransaction checkout(User user, Map<Integer, Integer> cart, double cashReceived, String customerName) {
 		
 		// ERROR: manager tries to checkout
 		if (user == null || !user.canProcessSale()) {
@@ -84,7 +84,7 @@ public class TransactionService {
 		
 		// create sales transaction
 		int id = nextTransactionId();
-		SalesTransaction transaction = new SalesTransaction(id, LocalDateTime.now(), user.getUsername(),
+		SalesTransaction transaction = new SalesTransaction(customerName, id, LocalDateTime.now(), user.getUsername(),
 				user.getDisplayName(), purchasedProducts, cashReceived, false, null, null);
 		
 		// ERROR: insufficient cash
