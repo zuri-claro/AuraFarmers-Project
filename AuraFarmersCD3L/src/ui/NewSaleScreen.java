@@ -56,6 +56,7 @@ public class NewSaleScreen extends BorderPane {
 	private final VBox cartItems = new VBox(10);
 	private final Label quantitiesValue = new Label("0");
 	private final Label totalValue = new Label(Dashboard.formatPeso(0));
+	private final TextField nameField = new TextField();
 	private final TextField cashField = new TextField();
 	private final Label changeValue = new Label(Dashboard.formatPeso(0));
 	private final Label messageLabel = new Label();
@@ -123,6 +124,9 @@ public class NewSaleScreen extends BorderPane {
 		cartScroll.setFitToWidth(true);
 		cartScroll.setPrefHeight(300);
 		
+		nameField.setPromptText("Customer Name");
+		nameField.setOnKeyReleased(e -> refreshChange());
+		
 		cashField.setPromptText("₱");
 		cashField.setOnKeyReleased(e -> refreshChange()); // change updates while typing
 		
@@ -132,10 +136,12 @@ public class NewSaleScreen extends BorderPane {
 		GridPane totals = new GridPane();
 		totals.setHgap(20);
 		totals.setVgap(8);
-		totals.addRow(0, new Label("Quantities:"), quantitiesValue);
-		totals.addRow(1, new Label("Total:"), totalValue);
-		totals.addRow(2, new Label("Cash Received:"), cashField);
-		totals.addRow(3, new Label("Change:"), changeValue);
+		
+		totals.addRow(0, new Label("Customer Name:"), nameField);
+		totals.addRow(1, new Label("Quantities:"), quantitiesValue);
+		totals.addRow(2, new Label("Total:"), totalValue);
+		totals.addRow(3, new Label("Cash Received:"), cashField);
+		totals.addRow(4, new Label("Change:"), changeValue);
 		
 		VBox right = new VBox(10, cartTitle, cartScroll, totals, completeButton);
 		right.getStyleClass().add("white-card");
@@ -360,6 +366,13 @@ public class NewSaleScreen extends BorderPane {
 			return;
 		} // end of if statement
 		
+		// ERROR: customer name is empty
+		String customerName = nameField.getText().trim();
+		if (customerName.isEmpty()) {
+		    Dashboard.showError("Please enter the customer name.");
+		    return;
+		}
+		
 		// ERROR: cash is not a number
 		double cash;
 		try {
@@ -377,7 +390,7 @@ public class NewSaleScreen extends BorderPane {
 		
 		SalesTransaction transaction;
 		try {
-			transaction = transactionService.checkout(user, new LinkedHashMap<>(cart), cash);
+			transaction = transactionService.checkout(user, new LinkedHashMap<>(cart), cash, customerName);
 		} catch (RuntimeException e) { // e.g. not enough stock, inactive product
 			Dashboard.showError(e.getMessage());
 			return;
@@ -395,6 +408,7 @@ public class NewSaleScreen extends BorderPane {
 		// start a new cart
 		cart.clear();
 		cashField.clear();
+		nameField.clear();
 		refreshProducts();
 		refreshCart();
 		

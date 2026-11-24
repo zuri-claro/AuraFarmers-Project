@@ -80,26 +80,27 @@ public class TransactionCheck {
 		Clerk ana = new Clerk("ana", "pw12345", "Ana");
 		
 		// ----- the proposal's worked example: 2 Tomato Seeds (35) + 1 Complete Fertilizer (180) = 250, pays 300, change 50 -----
-		SalesTransaction t1 = tx.checkout(juan, cart(1, 2, 2, 1), 300);
+		SalesTransaction t1 = tx.checkout(juan, cart(1, 2, 2, 1), 300, "customer1");
 		check("checkout returns a transaction", t1 != null);
 		check("total is 250 and change is 50", t1.getTotalAmount() == 250.0 && t1.getChangeGiven() == 50.0);
 		check("stock goes down after the sale", inventory.findByProductId(1).getCurrentStock() == 8 && inventory.findByProductId(2).getCurrentStock() == 4);
 		check("transaction is valid and has the clerk", !t1.isVoided() && t1.getClerkUsername().equals("juan"));
+		check("customer name is saved", t1.getCustomerName().equals("customer1"));
 		check("price snapshot kept in the items", t1.getItems().get(0).getUnitPrice() == 35.0 && t1.getTotalQuantity() == 3);
 		
 		// ----- sale rules -----
-		check("manager cannot process a sale", tx.checkout(manager, cart(1, 1), 100) == null);
-		check("empty cart is rejected", tx.checkout(juan, cart(), 100) == null);
-		check("cash below the total is rejected", tx.checkout(juan, cart(2, 1), 100) == null);
+		check("manager cannot process a sale", tx.checkout(manager, cart(1, 1), 100, "customer2") == null);
+		check("empty cart is rejected", tx.checkout(juan, cart(), 100, "customer3") == null);
+		check("cash below the total is rejected", tx.checkout(juan, cart(2, 1), 100, "customer4") == null);
 		check("failed sales did not change the stock", inventory.findByProductId(2).getCurrentStock() == 4);
-		check("unknown product is rejected", tx.checkout(juan, cart(99, 1), 100) == null);
-		check("quantity 0 is rejected", tx.checkout(juan, cart(1, 0), 100) == null);
-		expectThrows("not enough stock throws", IllegalStateException.class, () -> tx.checkout(juan, cart(1, 3, 2, 99), 100000));
+		check("unknown product is rejected", tx.checkout(juan, cart(99, 1), 100, "customer5") == null);
+		check("quantity 0 is rejected", tx.checkout(juan, cart(1, 0), 100, "customer6") == null);
+		expectThrows("not enough stock throws", IllegalStateException.class, () -> tx.checkout(juan, cart(1, 3, 2, 99), 100000, "customer7"));
 		check("nothing changed after the stock error (all or nothing)", inventory.findByProductId(1).getCurrentStock() == 8 && tx.getAll().size() == 1);
-		expectThrows("inactive product cannot be sold", IllegalArgumentException.class, () -> tx.checkout(juan, cart(3, 1), 100));
+		expectThrows("inactive product cannot be sold", IllegalArgumentException.class, () -> tx.checkout(juan, cart(3, 1), 100, "customer8"));
 		
 		// ----- search and totals -----
-		SalesTransaction t2 = tx.checkout(ana, cart(1, 1), 50);
+		SalesTransaction t2 = tx.checkout(ana, cart(1, 1), 50, "customer9");
 		check("ids count up", t2.getTransactionId() == t1.getTransactionId() + 1);
 		check("getAll is newest first", tx.getAll().get(0).getTransactionId() == t2.getTransactionId());
 		check("getByClerk only returns that clerk", tx.getByClerk("juan").size() == 1 && tx.getByClerk("ana").size() == 1);

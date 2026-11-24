@@ -124,11 +124,11 @@ public class InventoryScreen extends BorderPane {
         idColumn.setPrefWidth(90);
         idColumn.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getProduct().getDisplayId()));
         table.getColumns().add(idColumn);
-        table.getColumns().add(makeColumn("Product Name", 200, "name"));
-        table.getColumns().add(makeColumn("Category", 190, "category"));
-        table.getColumns().add(makeColumn("Current Stock", 100, "currentStock"));
-        table.getColumns().add(makeColumn("Low-Stock Threshold", 130, "lowStockThreshold"));
-        table.getColumns().add(makeColumn("Stock Status", 100, "status"));
+        table.getColumns().add(makeColumn("Product Name", 220, "name"));
+        table.getColumns().add(makeColumn("Category", 220, "category"));
+        table.getColumns().add(makeColumn("Current Stock", 140, "currentStock"));
+        table.getColumns().add(makeColumn("Low-Stock Threshold", 180, "lowStockThreshold"));
+        table.getColumns().add(makeColumn("Stock Status", 220, "status"));
 
         // SortedList lets user click a column header to sort
         SortedList<InventoryItem> sortedItems = new SortedList<>(filteredItems);

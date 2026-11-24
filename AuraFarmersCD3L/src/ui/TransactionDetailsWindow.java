@@ -78,6 +78,7 @@ public class TransactionDetailsWindow extends Stage {
 		addRow(grid, row++, "Transaction ID:", t.getDisplayId());
 		addRow(grid, row++, "Date and Time:", t.getTimestampSecondsText());
 		addRow(grid, row++, "Processed By:", t.getClerkName());
+		addRow(grid, row++, "Customer Name:", t.getCustomerName());
 		addRow(grid, row++, "Quantities:", String.valueOf(t.getTotalQuantity()));
 		addRow(grid, row++, "Total Cost:", Dashboard.formatPeso(t.getTotalAmount()));
 		addRow(grid, row++, "Cash Received:", Dashboard.formatPeso(t.getCashReceived()));

@@ -21,6 +21,9 @@ public class SalesTransaction {
     private final double cashReceived;
     private final double changeGiven;
 	
+    // for customer details
+    private final String customerName;
+    
 	// 	clerk who processed transaction
 	private final String clerkUsername;
     private final String clerkName;
@@ -39,10 +42,11 @@ public class SalesTransaction {
      * 						List<SaleLine>, double, boolean, String, LocalDateTime)
      * 	- constructor method
      */
-    public SalesTransaction(int transactionId, LocalDateTime timestamp, String clerkUsername, String clerkName,
+    public SalesTransaction(String customerName, int transactionId, LocalDateTime timestamp, String clerkUsername, String clerkName,
 			List<PurchasedProduct> itemsPurchased, double cashReceived, boolean status, String voidedBy, LocalDateTime voidedAt) {
     	
     	// initialize attributes
+    	this.customerName = customerName;
 		this.transactionId = transactionId;
 		this.timestamp = timestamp.withNano(0);
 		this.clerkUsername = clerkUsername;
@@ -70,6 +74,7 @@ public class SalesTransaction {
     /*
      * GETTERS
      */
+    public String getCustomerName() {return customerName;}
 	public int getTransactionId() {return transactionId;}
 	public LocalDateTime getTimestamp() {return timestamp;}
 	public String getClerkUsername() {return clerkUsername;}
