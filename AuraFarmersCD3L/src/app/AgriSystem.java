@@ -135,6 +135,19 @@ public class AgriSystem {
     	add(inventory, 15, "Seedling Tray", "Tray for starting seeds and growing seedlings", 80.0, Category.PLANTING_MATERIALS, "Piece", 0, 5);
     	add(inventory, 16, "Nursery Pots", "Containers for growing young plants", 10.0, Category.PLANTING_MATERIALS, "Piece", 0, 5);
     	add(inventory, 17, "Plant Labels", "Labels for identifying plant varieties", 30.0, Category.PLANTING_MATERIALS, "Pack", 0, 5);
+    	add(inventory, 18, "Okra Seeds", "Seeds for growing okra", 30.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 19, "Eggplant Seeds", "Seeds for growing eggplant", 35.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 20, "String Bean Seeds", "Seeds for growing string beans (sitaw)", 40.0, Category.SEEDS, "Packet", 0, 5);
+    	add(inventory, 21, "Garden Soil Mix", "Ready-to-use potting mix for containers and beds", 90.0, Category.FERTILIZERS_SOIL, "Bag", 0, 5);
+    	add(inventory, 22, "Urea Fertilizer", "Nitrogen fertilizer for leafy growth", 220.0, Category.FERTILIZERS_SOIL, "Bag", 0, 5);
+    	add(inventory, 23, "Neem Oil Spray", "Natural spray for controlling soft-bodied insects", 170.0, Category.PESTICIDES, "Bottle", 0, 5);
+    	add(inventory, 24, "Snail Bait", "Pellets for controlling snails and slugs", 110.0, Category.PESTICIDES, "Pack", 0, 5);
+    	add(inventory, 25, "Garden Spade", "Tool for digging and turning soil", 250.0, Category.HAND_TOOLS, "Piece", 0, 5);
+    	add(inventory, 26, "Garden Rake", "Tool for leveling soil and clearing debris", 220.0, Category.HAND_TOOLS, "Piece", 0, 5);
+    	add(inventory, 27, "Garden Hose", "Flexible hose for watering plants", 350.0, Category.WATERING, "Piece", 0, 5);
+    	add(inventory, 28, "Sprinkler Head", "Attachment for spreading water over a wide area", 130.0, Category.WATERING, "Piece", 0, 5);
+    	add(inventory, 29, "Spray Bottle", "Handheld bottle for misting plants", 60.0, Category.WATERING, "Piece", 0, 5);
+    	add(inventory, 30, "Coco Coir Bricks", "Compressed coconut fiber for seed starting and potting", 75.0, Category.PLANTING_MATERIALS, "Piece", 0, 5);
     } // end of addProducts
     
     /*
