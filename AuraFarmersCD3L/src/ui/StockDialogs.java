@@ -84,6 +84,9 @@ public final class StockDialogs {
 	    return dialog.showAndWait(() -> {
 	        try {
 	            int newQuantity = Integer.parseInt(quantityField.getText().trim());
+	            if (reasonField.getText().trim().isEmpty()) {
+	                return "Reason is required.";
+	            }
 	            for (InventoryItem item : items) {
 	                String error = service.adjust(user, item.getProductId(), newQuantity, reasonField.getText());
 	                if (error != null) {
