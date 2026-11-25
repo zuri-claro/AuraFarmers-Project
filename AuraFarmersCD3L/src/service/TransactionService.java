@@ -238,7 +238,7 @@ public class TransactionService {
 		double total = 0;
 		LocalDateTime now = LocalDateTime.now();
 		for (SalesTransaction t : transactions) {
-			if (matches(t, clerkUsername, false, range, now)) {
+			if (!t.isVoided() && matches(t, clerkUsername, false, range, now)) {
 				total += t.getTotalAmount();
 			}
 		}
