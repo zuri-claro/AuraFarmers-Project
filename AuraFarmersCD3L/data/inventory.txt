@@ -1,13 +1,13 @@
 30|Coco Coir Bricks|Compressed coconut fiber for seed starting and potting|75.0|PLANTING_MATERIALS|true|33|5|Piece
 5|Complete Fertilizer|Fertilizer for general plant nutrient needs|180.0|FERTILIZERS_SOIL|true|46|5|Bag
-19|Eggplant Seeds|Seeds for growing eggplant|35.0|SEEDS|true|35|5|Packet
-8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|16|5|Pack
-9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|16|5|Bottle
+19|Eggplant Seeds|Seeds for growing eggplant|35.0|SEEDS|true|37|5|Packet
+8|Garden Fungicide|Product intended to control specified fungal diseases|180.0|PESTICIDES|true|22|5|Pack
+9|Garden Herbicide|Product intended to control specified weeds|200.0|PESTICIDES|true|20|5|Bottle
 27|Garden Hose|Flexible hose for watering plants|350.0|WATERING|true|9|5|Piece
 26|Garden Rake|Tool for leveling soil and clearing debris|220.0|HAND_TOOLS|true|0|5|Piece
 21|Garden Soil Mix|Ready-to-use potting mix for containers and beds|90.0|FERTILIZERS_SOIL|true|39|5|Bag
 25|Garden Spade|Tool for digging and turning soil|250.0|HAND_TOOLS|true|3|5|Piece
-7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|20|5|Pack
+7|General-Purpose Insecticide|Product intended to control specified insect pests|150.0|PESTICIDES|true|22|5|Pack
 12|Hand Cultivator|Tool for loosening soil and removing weeds|120.0|HAND_TOOLS|true|4|5|Piece
 10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|24|5|Piece
 14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|21|5|Piece
