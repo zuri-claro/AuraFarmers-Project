@@ -2,6 +2,7 @@ package ui;
 
 import app.AgriSystem;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.SelectionMode;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
@@ -17,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import java.util.ArrayList;
+import java.util.List;
 import model.Category;
 import model.InventoryItem;
 import model.User;
@@ -120,6 +123,8 @@ public class InventoryScreen extends BorderPane {
      */
     private void setupTable() {
     	
+    	// lets the user select multiple products via SHIFT + CLICK or CTRL + CLICK
+    	table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         // product id is shown as AG001 (not just 1)
         TableColumn<InventoryItem, Object> idColumn = new TableColumn<>("Product ID");
         idColumn.setPrefWidth(90);
@@ -194,49 +199,54 @@ public class InventoryScreen extends BorderPane {
      * onRestock()
      */
     private void onRestock() {
-        InventoryItem item = getSelectedItem();
-        if (item == null) {
+        List<InventoryItem> items = getSelectedItems();
+        if (items.isEmpty()) {
             return;
-        } // end of if statement
-        StockDialogs.showRestock(service, user, item);
+        }
+        StockDialogs.showRestock(service, user, items);
         refresh();
+        table.getSelectionModel().clearSelection();
     } // end of onRestock
     
     /*
      * onAdjust()
      */
     private void onAdjust() {
-        InventoryItem item = getSelectedItem();
-        if (item == null) {
+        List<InventoryItem> items = getSelectedItems();
+        if (items.isEmpty()) {
             return;
-        } // end of if statement
-        StockDialogs.showAdjust(service, user, item);
+        }
+        StockDialogs.showAdjust(service, user, items);
         refresh();
+        table.getSelectionModel().clearSelection();
     } // end of onAdjust
     
     /*
      * onThreshold()
      */
     private void onThreshold() {
-        InventoryItem item = getSelectedItem();
-        if (item == null) {
+        List<InventoryItem> items = getSelectedItems();
+        if (items.isEmpty()) {
             return;
-        } // end of if statement
-        StockDialogs.showThreshold(service, user, item);
+        }
+        StockDialogs.showThreshold(service, user, items);
         refresh();
+        table.getSelectionModel().clearSelection();
     } // end of onThreshold
 
     /*
      * getSelectedItem()
      * 	- returns either the selected row or null
      */
-    private InventoryItem getSelectedItem() {
-        InventoryItem item = table.getSelectionModel().getSelectedItem();
-        if (item == null) {
-            showError("Select a product in the table first.");
-        } // end of if statement
-        return item;
-    } // end of getSelectedItem()
+    private List<InventoryItem> getSelectedItems() {
+        List<InventoryItem> items = table.getSelectionModel().getSelectedItems();
+
+        if (items.isEmpty()) {
+            showError("Select at least one product in the table first.");
+        }
+
+        return new ArrayList<>(items);
+    } // end of getSelectedItems
     
     
     /*

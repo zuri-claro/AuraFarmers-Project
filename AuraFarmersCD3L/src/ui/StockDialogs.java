@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javafx.scene.control.TextField;
 import model.InventoryItem;
 import model.User;
@@ -24,10 +26,18 @@ public final class StockDialogs {
 	private StockDialogs() {}
 	
 	/*
+	 * getProductNmaes(List<InventoryItem> items)
+	 * - retrieves the names of the selected products
+	 */
+	private static String getProductNames(List<InventoryItem> items) {
+	    return items.stream().map(item -> item.getProduct().getName()).collect(Collectors.joining(", "));
+	}
+	
+	/*
 	 * showRestock(InventoryService, User, InventoryItem)
 	 * 	- asks how many units arrived and an optional note, then adds them to the stock
 	 */
-	public static boolean showRestock(InventoryService service, User user, InventoryItem item) {
+	public static boolean showRestock(InventoryService service, User user, List<InventoryItem> items) {
 		
 		TextField quantityField = new TextField();
 		quantityField.setPromptText("e.g. 50");
@@ -35,14 +45,20 @@ public final class StockDialogs {
 		noteField.setPromptText("e.g. Delivery from supplier");
 		
 		FormDialog dialog = new FormDialog("Restock Item", "Restock");
-		dialog.addNote(item.getProduct().getName() + " - current stock: " + item.getCurrentStock());
+		dialog.addNote(getProductNames(items));
 		dialog.addField("Quantity Received", quantityField);
 		dialog.addField("Note (optional)", noteField);
 		
 		return dialog.showAndWait(() -> {
 			try {
 				int quantity = Integer.parseInt(quantityField.getText().trim());
-				return service.restock(user, item.getProductId(), quantity, noteField.getText()); // null if it worked
+	            for (InventoryItem item : items) {
+	                String error = service.restock(user, item.getProductId(), quantity, noteField.getText());
+	                if (error != null) {
+	                    return error;
+	                }
+	            }
+	            return null; // returns null if it worked
 			} catch (NumberFormatException e) {
 				return "Quantity must be a whole number.";
 			} // end of try catch
@@ -54,25 +70,31 @@ public final class StockDialogs {
 	 * showAdjust(InventoryService, User, InventoryItem)
 	 * 	- sets the stock to a new number (e.g. after counting); a reason is required
 	 */
-	public static boolean showAdjust(InventoryService service, User user, InventoryItem item) {
+	public static boolean showAdjust(InventoryService service, User user, List<InventoryItem> items) {
 		
-		TextField quantityField = new TextField(String.valueOf(item.getCurrentStock()));
+		TextField quantityField = new TextField();
 		TextField reasonField = new TextField();
 		reasonField.setPromptText("e.g. Damaged goods, counting error");
 		
 		FormDialog dialog = new FormDialog("Stock Adjustment", "Save");
-		dialog.addNote(item.getProduct().getName() + " - current stock: " + item.getCurrentStock());
+		dialog.addNote(getProductNames(items));
 		dialog.addField("New Stock Quantity", quantityField);
 		dialog.addField("Reason (required)", reasonField);
 		
-		return dialog.showAndWait(() -> {
-			try {
-				int newQuantity = Integer.parseInt(quantityField.getText().trim());
-				return service.adjust(user, item.getProductId(), newQuantity, reasonField.getText());
-			} catch (NumberFormatException e) {
-				return "New stock quantity must be a whole number.";
-			} // end of try catch
-		});
+	    return dialog.showAndWait(() -> {
+	        try {
+	            int newQuantity = Integer.parseInt(quantityField.getText().trim());
+	            for (InventoryItem item : items) {
+	                String error = service.adjust(user, item.getProductId(), newQuantity, reasonField.getText());
+	                if (error != null) {
+	                    return error;
+	                }
+	            }
+	            return null;
+	        } catch (NumberFormatException e) {
+	            return "New stock quantity must be a whole number.";
+	        } // end of try catch
+	    });
 		
 	} // end of showAdjust
 	
@@ -80,23 +102,29 @@ public final class StockDialogs {
 	 * showThreshold(InventoryService, User, InventoryItem)
 	 * 	- changes the number at which the product counts as low stock
 	 */
-	public static boolean showThreshold(InventoryService service, User user, InventoryItem item) {
+	public static boolean showThreshold(InventoryService service, User user, List<InventoryItem> items) {
 		
-		TextField thresholdField = new TextField(String.valueOf(item.getLowStockThreshold()));
-		
+	    TextField thresholdField = new TextField();
+	    
 		FormDialog dialog = new FormDialog("Low-Stock Threshold", "Save");
-		dialog.addNote(item.getProduct().getName() + " - current stock: " + item.getCurrentStock());
+	    dialog.addNote(getProductNames(items));
 		dialog.addField("Low-Stock Threshold", thresholdField);
 		dialog.addNote("A Low Stock alert shows when stock reaches this number.");
 		
-		return dialog.showAndWait(() -> {
-			try {
-				int threshold = Integer.parseInt(thresholdField.getText().trim());
-				return service.setThreshold(user, item.getProductId(), threshold);
-			} catch (NumberFormatException e) {
-				return "Threshold must be a whole number.";
-			} // end of try catch
-		});
+	    return dialog.showAndWait(() -> {
+	        try {
+	            int threshold = Integer.parseInt(thresholdField.getText().trim());
+	            for (InventoryItem item : items) {
+	                String error = service.setThreshold(user, item.getProductId(), threshold);
+	                if (error != null) {
+	                    return error;
+	                }
+	            }
+	            return null;
+	        } catch (NumberFormatException e) {
+	            return "Threshold must be a whole number.";
+	        } // end of try catch
+	    }); 
 		
 	} // end of showThreshold
 	
