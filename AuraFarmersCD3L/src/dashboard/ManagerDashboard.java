@@ -192,7 +192,7 @@ public class ManagerDashboard extends Dashboard {
     	VBox.setVgrow(body, Priority.ALWAYS);
     	
     	showScreen(dashboardButton, home);
-    	overviewTab.fire();
+    	showTab(overviewTab, createOverviewTab());
     	
     } // end of showDashboardHome
     

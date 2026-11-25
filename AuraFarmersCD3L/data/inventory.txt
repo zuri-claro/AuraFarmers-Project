@@ -12,19 +12,19 @@
 10|Hand Trowel|Small tool for digging and transplanting|100.0|HAND_TOOLS|true|24|5|Piece
 14|Hose Nozzle|Attachment for controlling water flow|90.0|WATERING|true|21|5|Piece
 23|Neem Oil Spray|Natural spray for controlling soft-bodied insects|170.0|PESTICIDES|true|12|5|Bottle
-16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|106|5|Piece
-18|Okra Seeds|Seeds for growing okra|30.0|SEEDS|true|34|5|Packet
+16|Nursery Pots|Containers for growing young plants|10.0|PLANTING_MATERIALS|true|107|5|Piece
+18|Okra Seeds|Seeds for growing okra|30.0|SEEDS|true|36|5|Packet
 4|Organic Compost|Organic material for improving soil conditions|120.0|FERTILIZERS_SOIL|true|54|5|Bag
 2|Pechay Seeds|Seeds for growing pechay|25.0|SEEDS|true|53|5|Packet
 17|Plant Labels|Labels for identifying plant varieties|30.0|PLANTING_MATERIALS|true|0|5|Pack
 11|Pruning Shears|Tool for trimming small branches and stems|180.0|HAND_TOOLS|true|15|5|Piece
-15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|45|5|Piece
+15|Seedling Tray|Tray for starting seeds and growing seedlings|80.0|PLANTING_MATERIALS|true|46|5|Piece
 24|Snail Bait|Pellets for controlling snails and slugs|110.0|PESTICIDES|false|9|5|Pack
-29|Spray Bottle|Handheld bottle for misting plants|60.0|WATERING|true|18|5|Piece
+29|Spray Bottle|Handheld bottle for misting plants|60.0|WATERING|true|19|5|Piece
 28|Sprinkler Head|Attachment for spreading water over a wide area|130.0|WATERING|true|6|5|Piece
 20|String Bean Seeds|Seeds for growing string beans (sitaw)|40.0|SEEDS|true|8|5|Packet
 3|Sweet Corn Seeds|Seeds for growing sweet corn|50.0|SEEDS|true|37|5|Packet
-1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|58|5|Packet
+1|Tomato Seeds|Seeds for growing tomato plants|35.0|SEEDS|true|62|5|Packet
 22|Urea Fertilizer|Nitrogen fertilizer for leafy growth|220.0|FERTILIZERS_SOIL|true|16|5|Bag
-6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|34|5|Bag
+6|Vermicast|Earthworm-produced soil amendment|100.0|FERTILIZERS_SOIL|true|36|5|Bag
 13|Watering Can|Container used for watering plants|150.0|WATERING|true|17|5|Piece
