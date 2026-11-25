@@ -1,7 +1,7 @@
 1|2026-11-09T11:42:13|Ate Joy|caleb_xia|Caleb|500.0|false|||20~String Bean Seeds~40.0~1;8~Garden Fungicide~180.0~2;15~Seedling Tray~80.0~1
 2|2026-11-09T14:38:34|Mr. Santos|clerk|Sir Clerk|450.0|false|||18~Okra Seeds~30.0~3;1~Tomato Seeds~35.0~3;3~Sweet Corn Seeds~50.0~2;21~Garden Soil Mix~90.0~1;17~Plant Labels~30.0~2
-3|2026-11-10T08:08:49|Mr. Santos|sylus_qin|Sylus|300.0|true|manager|2026-11-25T07:42:02|6~Vermicast~100.0~2;16~Nursery Pots~10.0~1;29~Spray Bottle~60.0~1
-4|2026-11-10T15:02:46|Ate Liza|sylus_qin|Sylus|300.0|true|manager|2026-11-25T07:56:32|15~Seedling Tray~80.0~1;18~Okra Seeds~30.0~2;1~Tomato Seeds~35.0~4
+3|2026-11-10T08:08:49|Mr. Santos|sylus_qin|Sylus|300.0|false|||6~Vermicast~100.0~2;16~Nursery Pots~10.0~1;29~Spray Bottle~60.0~1
+4|2026-11-10T15:02:46|Ate Liza|sylus_qin|Sylus|300.0|false|||15~Seedling Tray~80.0~1;18~Okra Seeds~30.0~2;1~Tomato Seeds~35.0~4
 5|2026-11-11T14:15:47|Walk-in|clerk|Sir Clerk|650.0|true|james_nmj|2026-11-12T16:15:47|1~Tomato Seeds~35.0~1;23~Neem Oil Spray~170.0~2;15~Seedling Tray~80.0~3
 6|2026-11-11T16:10:40|Aling Baby|sylus_qin|Sylus|500.0|false|||8~Garden Fungicide~180.0~1;2~Pechay Seeds~25.0~2;12~Hand Cultivator~120.0~2
 7|2026-11-12T11:50:44|Aling Rosa|allen_kalbo|Allen|300.0|false|||21~Garden Soil Mix~90.0~1;12~Hand Cultivator~120.0~1
@@ -13,7 +13,7 @@
 13|2026-11-16T14:23:15|Aling Rosa|sylus_qin|Sylus|250.0|false|||21~Garden Soil Mix~90.0~2;19~Eggplant Seeds~35.0~2
 14|2026-11-17T12:54:34|Walk-in|caleb_xia|Caleb|600.0|false|||3~Sweet Corn Seeds~50.0~3;5~Complete Fertilizer~180.0~1;16~Nursery Pots~10.0~9;20~String Bean Seeds~40.0~3
 15|2026-11-17T16:07:32|Ate Grace|rafayel_qi|Rafayel|200.0|false|||2~Pechay Seeds~25.0~1;20~String Bean Seeds~40.0~3;3~Sweet Corn Seeds~50.0~1
-16|2026-11-18T08:41|Walk-in|caleb_xia|Caleb|400.0|true|clerk|2026-11-18T13:41|29~Spray Bottle~60.0~1;2~Pechay Seeds~25.0~1;19~Eggplant Seeds~35.0~3;6~Vermicast~100.0~2
+16|2026-11-18T08:41:00|Walk-in|caleb_xia|Caleb|400.0|true|clerk|2026-11-18T13:41:00|29~Spray Bottle~60.0~1;2~Pechay Seeds~25.0~1;19~Eggplant Seeds~35.0~3;6~Vermicast~100.0~2
 17|2026-11-18T15:38:42|Ate Liza|rafayel_qi|Rafayel|1000.0|false|||4~Organic Compost~120.0~2;20~String Bean Seeds~40.0~3;21~Garden Soil Mix~90.0~1;7~General-Purpose Insecticide~150.0~2
 18|2026-11-19T16:20:52|Mang Ernie|allen_kalbo|Allen|650.0|false|||4~Organic Compost~120.0~2;30~Coco Coir Bricks~75.0~2;29~Spray Bottle~60.0~2;2~Pechay Seeds~25.0~4
 19|2026-11-20T13:54:42|Ate Grace|sylus_qin|Sylus|500.0|false|||3~Sweet Corn Seeds~50.0~1;5~Complete Fertilizer~180.0~1;16~Nursery Pots~10.0~4
