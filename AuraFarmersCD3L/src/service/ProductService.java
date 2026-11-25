@@ -199,10 +199,11 @@ public class ProductService {
 	} // end of requireManager
 	
 	/*
-	 * validateDetails(String, double, Category, String)
-	 * 	- throws IllegalArgumentException with a friendly message if a value is not acceptable
+	 * checkRequiredFields(String, Category, String)
+	 * 	- throws IllegalArgumentException if the name or unit is empty or no category was chosen
+	 * 	- public so the product form can check these first, before it reads the numbers
 	 */
-	private void validateDetails(String name, double price, Category category, String unit) {
+	public void checkRequiredFields(String name, Category category, String unit) {
 		
 		if (name == null || name.trim().isEmpty()) {
 			throw new IllegalArgumentException("Product name cannot be empty.");
@@ -213,6 +214,16 @@ public class ProductService {
 		if (unit == null || unit.trim().isEmpty()) {
 			throw new IllegalArgumentException("Unit cannot be empty (e.g. Packet, Bag, Piece).");
 		} // end of if statement
+		
+	} // end of checkRequiredFields
+	
+	/*
+	 * validateDetails(String, double, Category, String)
+	 * 	- throws IllegalArgumentException with a friendly message if a value is not acceptable
+	 */
+	private void validateDetails(String name, double price, Category category, String unit) {
+		
+		checkRequiredFields(name, category, unit);
 		if (Double.isNaN(price) || Double.isInfinite(price) || price <= 0) {
 			throw new IllegalArgumentException("Price must be greater than zero.");
 		} // end of if statement
