@@ -1,10 +1,10 @@
-MANAGER|manager|Mr. Manager|manager123
-CLERK|clerk|Sir Clerk|clerk123
-MANAGER|yukiclemente|Yuki|password
-MANAGER|zurielclaro|Zuri|password
-MANAGER|abigaillicanda|Abby|password
-MANAGER|james_nmj|James|password
-CLERK|allen_kalbo|Allen|password
-CLERK|rafayel_qi|Rafayel|password
-CLERK|caleb_xia|Caleb|password
-CLERK|sylus_qin|Sylus|password
+MANAGER|manager|Mr. Manager|sha256$2aEmSFuycr8zSzIGHVAmeA==$xyl1zA93FD43jYLvLlWBgI1fGfEN3ObDI0NYesDRU/Q=
+CLERK|clerk|Sir Clerk|sha256$YcVHSY8uzxxFRbGHn/EwgQ==$TLnkQIj9PO5bi7uqV1wQUHzQCXc2OP5/kjMdZk34ciU=
+MANAGER|yukiclemente|Yuki|sha256$x0RK/sqbGOmvYdxI2lalEg==$i1fgosDWyQU3bnaeflopz2JoM3fYjuzjHIBMd0y99Bs=
+MANAGER|zurielclaro|Zuri|sha256$NYg+LLIksJXHh6LFawmRtw==$6NSzVvwWIW67wmyF3UtHoR7fF/qi67a4j2UBxGoXWVQ=
+MANAGER|abigaillicanda|Abby|sha256$1lGOyL/zfG9lE6t1ppq0VA==$559KX6Ef/74PmcWASFOIkISQJmFuMATspWvIiZ4DEBI=
+MANAGER|james_nmj|James|sha256$RB3/+ii7GyUqFQFlJKuFwA==$WD3Hd3FcMOWCEKIGZYMkrZejz1hl9/cvZQ08KZbCnM0=
+CLERK|allen_kalbo|Allen|sha256$8MH/no1VQZowHU7U/7KiGg==$VpSWZ/MFBN1HX/2ypzqa3uodzOX/4AnIFAH5j/QFRhk=
+CLERK|rafayel_qi|Rafayel|sha256$VmZl73w1CiqitCT9uDF/gg==$9jPSOA1amxoqtv6Dng1JQmjK0mGs5C4dQZIAT4Os9CY=
+CLERK|caleb_xia|Caleb|sha256$niL5N7KCmmnzA3TAkU//bg==$B/CG+r9U74PPNyjxyd9R9+nQPwftzesUB/h+ypAjrgo=
+CLERK|sylus_qin|Sylus|sha256$OZSuMj6YtzN9SMPIOHqxCA==$zBpDEQxCWhoXeFv6NM8FNOG6N00kUa05GvaiQ9+xlfw=
