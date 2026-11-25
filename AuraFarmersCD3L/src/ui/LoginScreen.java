@@ -107,6 +107,9 @@ public class LoginScreen extends StackPane {
 		signIn.setOnAction(e -> onLogin());
 		
 		errorLabel.setWrapText(true);
+		errorLabel.setMaxWidth(Double.MAX_VALUE);
+		errorLabel.setAlignment(Pos.CENTER);
+		errorLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 		
 		welcome.getStyleClass().add("login-welcome");
 		subtitle.getStyleClass().add("login-subtitle");
