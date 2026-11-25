@@ -9,7 +9,7 @@ public abstract class User {
 	
 	// ATTRIBUTES
 	private final String username; // final
-	private String password;
+	private String password; // a salted hash when loaded from users.txt (see PasswordHasher); a plain value is also accepted
 	private String displayName;
 	private final Role role; // final
 	
@@ -40,11 +40,18 @@ public abstract class User {
 		
 	/*
 	 * checkPassword(String)
-	 * 	- abstract method that checks if user input is same as user's password
+	 * 	- normal (not abstract) method: true if the typed password matches the stored one
+	 * 	- the comparison is done by PasswordHasher, so it works with a hash and with a plain password
 	 */
 	public boolean checkPassword(String input) {
-		return input.equals(this.password);
+		return PasswordHasher.matches(input, this.password);
 	} // end of checkPassword
+	
+	/*
+	 * getStoredPassword()
+	 * 	- the value kept for the password (the hash), only used by UserFileManager when saving users.txt
+	 */
+	public String getStoredPassword() {return password;}
 	
 	/*
 	 * canModifyInventory()

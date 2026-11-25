@@ -107,7 +107,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 24, 0, 8, 8);
 }
 .stat-card {
-    -fx-background-color: white;
     -fx-border-color: #6a6a6a;
     -fx-border-width: 1;
     -fx-padding: 8 14 8 14;
@@ -170,22 +169,13 @@
 
 /* ---------- tables ---------- */
 .table-view {
-    -fx-background-color: #ffffff;
+    -fx-background-color: transparent;
     -fx-control-inner-background: #d9d9d9;
     -fx-control-inner-background-alt: #d9d9d9;
-    /*-fx-table-cell-border-color: transparent;*/
-    -fx-padding: 0;
-    -fx-border-color: #2e8a57;
-	-fx-border-width: 1.5px;
-}
-
-.table-view .column-header-background {
-    -fx-background-color: #e8f0ea;
-    -fx-border-color: transparent transparent #2e8a57 transparent;
-    -fx-border-width: 0 0 1.5px 0;
+    -fx-table-cell-border-color: transparent;
     -fx-padding: 0;
 }
-
+.table-view .column-header-background { -fx-background-color: transparent; -fx-padding: 0; }
 .table-view .column-header,
 .table-view .filler {
     -fx-background-color: transparent;
@@ -199,7 +189,7 @@
 }
 .table-view .table-row-cell {
     -fx-background-color: transparent;
-    /*-fx-table-cell-border-color: transparent;*/
+    -fx-table-cell-border-color: transparent;
     -fx-cell-size: 40;
 }
 .table-view .table-cell {
@@ -240,7 +230,7 @@
 .login-root     { -fx-background-color: #2e8a57; }
 .login-welcome  { -fx-text-fill: #2e8a57; -fx-font-size: 40px; -fx-font-weight: bold; }
 .login-subtitle { -fx-text-fill: #66bb6a; -fx-font-size: 18px; }
-.login-link     { -fx-text-fill: #2e8a57; }
+.login-link     { -fx-text-fill: #2e8a57; -fx-cursor: hand; -fx-underline: true; }
 .form-error     { -fx-text-fill: #c62828; -fx-font-weight: bold; }
 
 /* ---------- pop-up forms (Add Product, Restock, ...) ---------- */
@@ -316,6 +306,7 @@
 
 .card-name     { -fx-text-fill: #1b2d24; -fx-font-size: 17px; -fx-font-weight: bold; }
 .card-category { -fx-text-fill: #6a7a72; -fx-font-size: 13px; }
+.card-description { -fx-text-fill: #55645c; -fx-font-size: 12.5px; }
 .card-price    { -fx-text-fill: #1b4332; -fx-font-size: 20px; -fx-font-weight: bold; }
 
 .card-button {

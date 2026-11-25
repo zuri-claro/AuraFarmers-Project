@@ -73,6 +73,15 @@ public class ProductCard extends VBox {
 		categoryLabel.getStyleClass().add("card-category");
 		categoryLabel.setMaxWidth(WIDTH - 28);
 		
+		// short description (2 lines at most, so every card has the same height)
+		Label descriptionLabel = new Label(product.getDescription() == null ? "" : product.getDescription());
+		descriptionLabel.getStyleClass().add("card-description");
+		descriptionLabel.setWrapText(true);
+		descriptionLabel.setMaxWidth(WIDTH - 28);
+		descriptionLabel.setMinHeight(36);
+		descriptionLabel.setPrefHeight(36);
+		descriptionLabel.setMaxHeight(36);
+		
 		// bottom line: price on the left, button on the right
 		Label priceLabel = new Label(Dashboard.formatPeso(product.getPrice()) + " /" + product.getUnit());
 		priceLabel.getStyleClass().add("card-price");
@@ -90,8 +99,7 @@ public class ProductCard extends VBox {
 			bottom.getChildren().add(actionButton);
 		} // end of if statement
 		
-		VBox info = new VBox(4, nameLabel, categoryLabel, new Separator(), bottom);
-		info.setPadding(new Insets(12));
+		VBox info = new VBox(4, nameLabel, categoryLabel, descriptionLabel, new Separator(), bottom);		info.setPadding(new Insets(12));
 		
 		getChildren().addAll(photo, info);
 		

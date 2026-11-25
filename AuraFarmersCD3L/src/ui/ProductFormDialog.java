@@ -115,7 +115,8 @@ public final class ProductFormDialog {
 		return dialog.showAndWait(() -> {
 			
 			try {
-				
+				// the required text fields are checked first, so the first problem shown is the first one in the form
+				productService.checkRequiredFields(nameField.getText(), categoryBox.getValue(), unitField.getText());
 				double price = parsePrice(priceField.getText());
 				int threshold = parseWholeNumber(thresholdField.getText(), "Low-Stock Threshold");
 				if (threshold < 0) {
